@@ -1,5 +1,6 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require('../db/dbMysql');
+const Userarea = require("./userarea");
 
 class Usuario extends Model{}
 
@@ -35,11 +36,19 @@ Usuario.init({
     },
     tipoCargo:{
         type:DataTypes.INTEGER
-    },
-    createdAt: false,
+    }
 },{
     sequelize,
     tableName:'usuario_interno'
+});
+
+Usuario.hasOne(Userarea,{
+    as:'userarea',
+    foreignKey:'idUsuario'
+});
+Userarea.belongsTo(Usuario,{
+    foreignKey:'idUsuario',
+    sourceKey:'id'
 });
 
 

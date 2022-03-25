@@ -19,4 +19,6 @@ Codigodocumento.init({
 },{
     sequelize,
     tableName:'codigo_documento'
-})
+});
+
+module.exports = Codigodocumento

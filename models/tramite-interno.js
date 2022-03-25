@@ -1,5 +1,6 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require('../db/dbMysql');
+const Derivacioninterno = require("./derivacioninterno");
 
 class Tramiteinterno extends Model{};
 
@@ -34,6 +35,15 @@ Tramiteinterno.init({
 },{
     sequelize,
     tableName:'tramite_interno'
+});
+
+Tramiteinterno.hasMany(Derivacioninterno,{
+    as:'derivacioninterno',
+    foreignKey:'tramite'
+});
+Derivacioninterno.belongsTo(Tramiteinterno,{
+    foreignKey:'tramite',
+    sourceKey:'id'
 });
 
 

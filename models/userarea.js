@@ -1,5 +1,4 @@
 const { Model, DataTypes } = require("sequelize");
-const { FOREIGNKEYS } = require("sequelize/types/query-types");
 const sequelize = require('../db/dbMysql');
 
 class Userarea extends Model{};

@@ -1,5 +1,6 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require('../db/dbMysql');
+const Derivacionexterno = require("./derivacionexterno");
 
 
 class Tramiteexterno extends Model{};
@@ -44,5 +45,14 @@ Tramiteexterno.init({
     tableName:'tramite_externo'
 });
 
+
+Tramiteexterno.hasMany(Derivacionexterno,{
+    as:'derivacionexterno',
+    foreignKey:'tramite'
+})
+Derivacionexterno.belongsTo(Tramiteexterno,{
+    foreignKey:'tramite',
+    sourceKey:'id'
+})
 
 module.exports = Tramiteexterno;
