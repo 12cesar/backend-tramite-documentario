@@ -12,7 +12,8 @@ class Server{
         this.app = express();
         this.port = process.env.PORT;
         this.paths = {
-            users:'/api/user'
+            users:'/api/user',
+            cargos:'/api/cargo'
         }
         //Connect to socket
         this.httpServer = new http.Server(this.app);
@@ -66,6 +67,7 @@ class Server{
     }
     routes(){
         this.app.use(this.paths.users, require('../routes/users'));
+        this.app.use(this.paths.cargos, require('../routes/cargo'));
     }
     listen(){
         this.httpServer.listen(this.port, ()=>{
