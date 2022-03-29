@@ -1,6 +1,7 @@
 const Server = require("./server");
 const Usuario = require("./user");
 const Cargo = require("./cargo");
+const Area = require('./area');
 const Codigodocumento = require("./codigodocumento");
 const Derivacionexterno = require("./derivacionexterno");
 const Derivacioninterno = require("./derivacioninterno");
@@ -29,6 +30,7 @@ module.exports = {
   Server,
   Usuario,
   Cargo,
+  Area,
   Codigodocumento,
   Derivacionexterno,
   Derivacioninterno,

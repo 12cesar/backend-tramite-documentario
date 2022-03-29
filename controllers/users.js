@@ -1,5 +1,5 @@
 const { response, request } = require("express");
-const { Usuario, Cargo } = require("../models");
+const { Usuario, Cargo, Userarea } = require("../models");
 const bcryptjs = require("bcryptjs");
 const getUsers = async (req = request, res = response) => {
   try {
@@ -10,17 +10,15 @@ const getUsers = async (req = request, res = response) => {
           model: Cargo,
           attributes: ["id", "nombre"],
         },
-      },
-      {
-        where: {
+        where:{
           habilitado: Number(habilitado),
-        },
+        }
       }
     );
     res.json({
       ok: true,
       msg: "Usuarios mostrado con exito",
-      user,
+      user
     });
   } catch (error) {
     res.status(400).json({
@@ -53,53 +51,81 @@ const getUser = async (req = request, res = response) => {
 const postUser = async (req = request, res = response) => {
   try {
     const {
-        nombre,
-        apellido,
-        domicilio,
-        telefono,
-        email,
-        nacimiento,
-        password,
-        dni,
-        tipoCargo,
-      } = req.body;
-      const nomMay= nombre.toUpperCase();
-      const apeMay= apellido.toUpperCase();
-      const salt = bcryptjs.genSaltSync();
-      const hasPassword = bcryptjs.hashSync(password,salt);
-      const user = await Usuario.create({
-          nombre:nomMay,
-          apellido:apeMay,
-          domicilio,
-          telefono,
-          email,
-          nacimiento,
-          password:hasPassword,
-          dni,
-          tipoCargo
-      })
-      res.json({
-        ok: true,
-        msg:'Usuario creado con exito',
-        user
-      });
+      nombre,
+      apellido,
+      domicilio,
+      telefono,
+      email,
+      nacimiento,
+      password,
+      dni,
+      tipoCargo,
+    } = req.body;
+    const nomMay = nombre.toUpperCase();
+    const apeMay = apellido.toUpperCase();
+    const salt = bcryptjs.genSaltSync();
+    const hasPassword = bcryptjs.hashSync(password, salt);
+    const user = await Usuario.create({
+      nombre: nomMay,
+      apellido: apeMay,
+      domicilio,
+      telefono,
+      email,
+      nacimiento,
+      password: hasPassword,
+      dni,
+      tipoCargo,
+    });
+    res.json({
+      ok: true,
+      msg: "Usuario creado con exito",
+      user,
+    });
   } catch (error) {
     res.status(400).json({
-        ok:false,
-        msg:`Error al ingresar el usuario, error: ${error}`
-    })
+      ok: false,
+      msg: `Error al ingresar el usuario, error: ${error}`,
+    });
   }
 };
 
 const putUser = async (req = request, res = response) => {
-  res.json({
-    ok: true,
-  });
+  try {
+    const {
+      nombre,
+      apellido,
+      password,
+      ...data
+    } = req.body;
+    const {id} = req.params;
+    if (password) {
+      const salt = bcryptjs.genSaltSync();
+      data.password = bcryptjs.hashSync(password,salt);
+    }
+    data.nombre= nombre.toUpperCase();
+    data.apellido= apellido.toUpperCase();
+    const user = await Usuario.update(data, {where:{id}})
+    res.json({
+      ok: true,
+      msg:'Usuario actualizado con exito',
+      user
+    });
+  } catch (error) {
+    res.status(400).json({
+      ok: false,
+      msg: `Error al actualizar el usuario, error: ${error}`,
+    });
+  }
 };
 
 const deleteUser = async (req = request, res = response) => {
+  const {id} = req.params;
+  const {habilitado}= req.query;
+  const user = await Usuario.update({habilitado:Number(habilitado)},{where:{id}})
   res.json({
     ok: true,
+    msg: Number(habilitado)===1 ? 'Usuario desbloqueado con exito' : 'Usuario bloqueado con exito',
+    user
   });
 };
 
