@@ -41,9 +41,9 @@ Usuario.init({
     sequelize,
     tableName:'usuario_interno'
 });
-
+/* Usuario area */
 Usuario.hasOne(Userarea,{
-    as:'userarea',
+    as:'usuarioarea',
     foreignKey:'idUsuario'
 });
 Userarea.belongsTo(Usuario,{

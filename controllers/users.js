@@ -4,21 +4,19 @@ const bcryptjs = require("bcryptjs");
 const getUsers = async (req = request, res = response) => {
   try {
     const { habilitado } = req.query;
-    const user = await Usuario.findAll(
-      {
-        include: {
-          model: Cargo,
-          attributes: ["id", "nombre"],
-        },
-        where:{
-          habilitado: Number(habilitado),
-        }
-      }
-    );
+    const user = await Usuario.findAll({
+      include: {
+        model: Cargo,
+        attributes: ["id", "nombre"],
+      },
+      where: {
+        habilitado: Number(habilitado),
+      },
+    });
     res.json({
       ok: true,
       msg: "Usuarios mostrado con exito",
-      user
+      user,
     });
   } catch (error) {
     res.status(400).json({
@@ -91,24 +89,19 @@ const postUser = async (req = request, res = response) => {
 
 const putUser = async (req = request, res = response) => {
   try {
-    const {
-      nombre,
-      apellido,
-      password,
-      ...data
-    } = req.body;
-    const {id} = req.params;
+    const { nombre, apellido, password, ...data } = req.body;
+    const { id } = req.params;
     if (password) {
       const salt = bcryptjs.genSaltSync();
-      data.password = bcryptjs.hashSync(password,salt);
+      data.password = bcryptjs.hashSync(password, salt);
     }
-    data.nombre= nombre.toUpperCase();
-    data.apellido= apellido.toUpperCase();
-    const user = await Usuario.update(data, {where:{id}})
+    data.nombre = nombre.toUpperCase();
+    data.apellido = apellido.toUpperCase();
+    const user = await Usuario.update(data, { where: { id } });
     res.json({
       ok: true,
-      msg:'Usuario actualizado con exito',
-      user
+      msg: "Usuario actualizado con exito",
+      user,
     });
   } catch (error) {
     res.status(400).json({
@@ -119,14 +112,27 @@ const putUser = async (req = request, res = response) => {
 };
 
 const deleteUser = async (req = request, res = response) => {
-  const {id} = req.params;
-  const {habilitado}= req.query;
-  const user = await Usuario.update({habilitado:Number(habilitado)},{where:{id}})
-  res.json({
-    ok: true,
-    msg: Number(habilitado)===1 ? 'Usuario desbloqueado con exito' : 'Usuario bloqueado con exito',
-    user
-  });
+  try {
+    const { id } = req.params;
+    const { habilitado } = req.query;
+    const user = await Usuario.update(
+      { habilitado: Number(habilitado) },
+      { where: { id } }
+    );
+    res.json({
+      ok: true,
+      msg:
+        Number(habilitado) === 1
+          ? "Usuario desbloqueado con exito"
+          : "Usuario bloqueado con exito",
+      user,
+    });
+  } catch (error) {
+    res.status(400).json({
+      ok: false,
+      msg: `Error al eliminar el usuario, error: ${error}`,
+    });
+  }
 };
 
 module.exports = {

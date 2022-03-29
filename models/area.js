@@ -29,7 +29,7 @@ Area.init({
     sequelize,
     tableName:'area'
 });
-
+/* Usuario Area */
 Area.hasOne(Userarea,{
     as:'areauser',
     foreignKey:'idArea'
@@ -39,7 +39,7 @@ Userarea.belongsTo(Area,{
     foreignKey:'idArea',
     sourceKey:'id'
 });
-
+/* Codigo documento */
 Area.hasMany(Codigodocumento,{
     as:'codigodocumento',
     foreignKey:'idArea'
@@ -48,7 +48,7 @@ Codigodocumento.belongsTo(Area,{
     foreignKey:'idArea',
     sourceKey:'id'
 })
-
+/* Derivacion externo */
 Area.hasMany(Derivacionexterno,{
     as:'destinoareaexterno',
     foreignKey:'destinoArea'
@@ -59,6 +59,7 @@ Derivacionexterno.belongsTo(Area,{
     sourceKey:'id'
 });
 
+/* Derivacion interno */
 Area.hasMany(Derivacioninterno,{
     as:'destinoareainterno',
     foreignKey:'destinoArea'
