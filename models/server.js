@@ -17,7 +17,8 @@ class Server{
             direccion:'/api/direccion',
             area:'/api/area',
             userarea:'/api/userarea',
-            authuser:'/api/authuser'
+            authuser:'/api/authuser',
+            userexterno:'/api/userexterno'
         }
         //Connect to socket
         this.httpServer = new http.Server(this.app);
@@ -76,6 +77,7 @@ class Server{
         this.app.use(this.paths.area, require('../routes/area'));
         this.app.use(this.paths.userarea, require('../routes/userarea'));
         this.app.use(this.paths.authuser, require('../routes/authuser'));
+        this.app.use(this.paths.userexterno, require('../routes/user-externo'));
     }
     listen(){
         this.httpServer.listen(this.port, ()=>{
