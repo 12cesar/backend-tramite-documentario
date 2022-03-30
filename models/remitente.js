@@ -1,13 +1,26 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require('../db/dbMysql');
+const Tramiteexterno = require("./tramite-externo");
 
 
 class Remitente extends Model{};
 
 
 Remitente.init({
-    idPersona:{
-        type:DataTypes.INTEGER
+    nombre:{
+        type:DataTypes.STRING
+    },
+    documento:{
+        type: DataTypes.STRING
+    },
+    email:{
+        type: DataTypes.STRING
+    },
+    telefono:{
+        type: DataTypes.STRING
+    },
+    fecha:{
+        type: DataTypes.CHAR
     },
     tipoPersona:{
         type:DataTypes.TINYINT
@@ -17,5 +30,14 @@ Remitente.init({
     tableName:'remitente'
 });
 
+Remitente.hasMany(Tramiteexterno,{
+    as:'remitenteExterno',
+    foreignKey:'idRemitente'
+});
+
+Tramiteexterno.belongsTo(Remitente,{
+    foreignKey:'idRemitente',
+    sourceKey:'id'
+})
 
 module.exports = Remitente

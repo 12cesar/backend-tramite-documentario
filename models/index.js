@@ -15,8 +15,6 @@ const Documentointerno = require("./documentointerno");
 const Estadodocumento = require("./estadodocumento");
 const Estadotramite = require("./estadotramite");
 const Estructura = require("./estructura");
-const Personajuridica = require("./personajuridica");
-const Personanatural = require("./personanatural");
 const Recepcionexterno = require("./recepcionexterno");
 const Recepcioninterno = require("./recepcioninterno");
 const Remitente = require("./remitente");
@@ -44,8 +42,6 @@ module.exports = {
   Estadodocumento,
   Estadotramite,
   Estructura,
-  Personajuridica,
-  Personanatural,
   Recepcionexterno,
   Recepcioninterno,
   Remitente,
