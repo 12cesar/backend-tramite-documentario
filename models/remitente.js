@@ -22,6 +22,16 @@ Remitente.init({
     fecha:{
         type: DataTypes.CHAR
     },
+    password:{
+        type: DataTypes.STRING
+    },
+    direccion:{
+        type:DataTypes.STRING
+    },
+    habilitado:{
+        type: DataTypes.TINYINT,
+        defaultValue:1
+    },
     tipoPersona:{
         type:DataTypes.TINYINT
     }
