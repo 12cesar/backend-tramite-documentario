@@ -21,7 +21,10 @@ class Server{
             userexterno:'/api/userexterno',
             validsunat:'/api/validsunat',
             tipoPersona:'/api/tipopersona',
-            remitente:'/api/remitente'
+            remitente:'/api/remitente',
+            tipodocumento:'/api/tipodocumento',
+            estadodocumento:'/api/estadodocumento',
+            estadotramite:'/api/estadotramite'
         }
         //Connect to socket
         this.httpServer = new http.Server(this.app);
@@ -84,6 +87,9 @@ class Server{
         this.app.use(this.paths.tipoPersona, require('../routes/tipo-persona'));
         this.app.use(this.paths.validsunat, require('../routes/validar-sunat'));
         this.app.use(this.paths.remitente, require('../routes/remitente'));
+        this.app.use(this.paths.tipodocumento, require('../routes/tipo-documento'));
+        this.app.use(this.paths.estadodocumento, require('../routes/estado-documento'));
+        this.app.use(this.paths.estadotramite, require('../routes/estado-tramite'));
     }
     listen(){
         this.httpServer.listen(this.port, ()=>{

@@ -8,6 +8,10 @@ class Estadodocumento extends Model{};
 Estadodocumento.init({
     nombre:{
         type:DataTypes.STRING
+    },
+    habilitado:{
+        type:DataTypes.TINYINT,
+        defaultValue:1
     }
 },{
     sequelize,

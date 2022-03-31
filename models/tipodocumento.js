@@ -7,6 +7,10 @@ class Tipodocumento extends Model{};
 Tipodocumento.init({
     nombre:{
         type:DataTypes.STRING
+    },
+    habilitado:{
+        type:DataTypes.TINYINT,
+        defaultValue:1
     }
 },{
     sequelize,
