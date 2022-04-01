@@ -27,7 +27,7 @@ class Server{
             estadotramite:'/api/estadotramite'
         }
         //Connect to socket
-        this.httpServer = new http.Server(this.app);
+        this.httpServer = http.createServer(this.app);
         this.io = require('socket.io')(this.httpServer,{
             cors:{
                 origin:true,
