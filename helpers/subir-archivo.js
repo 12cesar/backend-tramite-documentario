@@ -1,6 +1,6 @@
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
-const subirArchivo = (files, extensionesValidas=['png','jpg', 'jpeg', 'gif'], carpeta= '') =>{
+const subirArchivoImg = (files, extensionesValidas=['png','jpg', 'jpeg'], carpeta= '') =>{
   
   
     return new Promise((resolve, reject)=>{
@@ -18,7 +18,6 @@ const subirArchivo = (files, extensionesValidas=['png','jpg', 'jpeg', 'gif'], ca
         const nombreTemporal = uuidv4() + '.' + extension;
         const uploadPath = path.join(__dirname, '../uploads/', carpeta, nombreTemporal);
       
-        console.log(uploadPath);
         archivo.mv(uploadPath,  (err) => {
           if (err) {
             reject(err)
@@ -31,5 +30,5 @@ const subirArchivo = (files, extensionesValidas=['png','jpg', 'jpeg', 'gif'], ca
 }
 
 module.exports = {
-    subirArchivo
+    subirArchivoImg
 }

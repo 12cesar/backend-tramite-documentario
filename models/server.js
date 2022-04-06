@@ -24,7 +24,9 @@ class Server{
             remitente:'/api/remitente',
             tipodocumento:'/api/tipodocumento',
             estadodocumento:'/api/estadodocumento',
-            estadotramite:'/api/estadotramite'
+            estadotramite:'/api/estadotramite',
+            estructura:'/api/estructura',
+            uploadestruc:'/api/uploadestructura'
         }
         //Connect to socket
         this.httpServer = http.createServer(this.app);
@@ -90,6 +92,8 @@ class Server{
         this.app.use(this.paths.tipodocumento, require('../routes/tipo-documento'));
         this.app.use(this.paths.estadodocumento, require('../routes/estado-documento'));
         this.app.use(this.paths.estadotramite, require('../routes/estado-tramite'));
+        this.app.use(this.paths.estructura, require('../routes/estructura'));
+        this.app.use(this.paths.uploadestruc, require('../routes/upload-estructura'));
     }
     listen(){
         this.httpServer.listen(this.port, ()=>{
