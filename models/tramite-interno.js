@@ -27,7 +27,8 @@ Tramiteinterno.init({
         type:DataTypes.INTEGER
     },
     estadoTramite:{
-        type:DataTypes.INTEGER
+        type:DataTypes.INTEGER,
+        defaultValue:2
     },
     descripcion:{
         type:DataTypes.TEXT
