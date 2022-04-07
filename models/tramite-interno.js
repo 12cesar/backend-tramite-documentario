@@ -33,6 +33,10 @@ Tramiteinterno.init({
     descripcion:{
         type:DataTypes.TEXT
     },
+    habilitado:{
+        type:DataTypes.TINYINT,
+        defaultValue:1
+    }
 },{
     sequelize,
     tableName:'tramite_interno'

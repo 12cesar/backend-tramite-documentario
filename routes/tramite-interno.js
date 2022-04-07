@@ -5,7 +5,7 @@ const { validarCampos, validarJWT } = require("../middlewares");
 
 const router = Router();
 
-router.get('/',[
+router.get('/mostrar/:estado',[
     validarJWT,
     validarCampos
 ],getTramiteInternos);

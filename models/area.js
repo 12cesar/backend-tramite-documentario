@@ -3,6 +3,7 @@ const sequelize = require('../db/dbMysql');
 const Codigodocumento = require("./codigodocumento");
 const Derivacionexterno = require("./derivacionexterno");
 const Derivacioninterno = require("./derivacioninterno");
+const Tramiteinterno = require("./tramite-interno");
 const Userarea = require("./userarea");
 
 class Area extends Model{}
@@ -70,4 +71,13 @@ Derivacioninterno.belongsTo(Area,{
     sourceKey:'id'
 });
 
+/* Tramite interno */
+Area.hasMany(Tramiteinterno, {
+    as:'areatramiteinterno',
+    foreignKey:'idArea'
+});
+Tramiteinterno.belongsTo(Area,{
+    foreignKey:'idArea',
+    sourceKey:'id'
+})
 module.exports = Area;
