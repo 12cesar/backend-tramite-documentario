@@ -38,7 +38,8 @@ Area.hasOne(Userarea,{
 
 Userarea.belongsTo(Area,{
     foreignKey:'idArea',
-    sourceKey:'id'
+    sourceKey:'id',
+    as:'areauser'
 });
 /* Codigo documento */
 Area.hasMany(Codigodocumento,{

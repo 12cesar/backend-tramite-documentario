@@ -24,6 +24,10 @@ Derivacioninterno.init({
     estado:{
         type:DataTypes.TINYINT,
         defaultValue:0
+    },
+    habilitado:{
+        type:DataTypes.TINYINT,
+        defaultValue:1
     }
 },{
     sequelize,
