@@ -71,8 +71,15 @@ const postDerivadoInterno = async (req = request, res = response) => {
       }
     );
     const { id } = await Derivacioninterno.create(data);
+    const date = new Date();
+    const output = date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0')+ '-' + String(date.getDate()).padStart(2, '0');
+    const fecha = output;
+    const separ = String(date).split(' ');
+    const hora = separ[4];
     const recepcioninter = await Recepcioninterno.create({
       idDerivacion: id,
+      fechaDerivacion:fecha,
+      horaDerivacion:hora
     });
     res.json({
       ok: true,

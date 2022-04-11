@@ -28,6 +28,7 @@ class Server{
             estructura:'/api/estructura',
             uploadestruc:'/api/uploadestructura',
             tramiteinter:'/api/tramiteinterno',
+            tramiteexter:'/api/tramiteexterno',
             derivadointer:'/api/derivadointerno',
             derivadoexter:'/api/derivadorexterno',
             recepcion:'/api/recepcion'
@@ -100,6 +101,7 @@ class Server{
         this.app.use(this.paths.uploadestruc, require('../routes/upload-estructura'));
         this.app.use(this.paths.tramiteinter, require('../routes/tramite-interno'));
         this.app.use(this.paths.derivadointer, require('../routes/derivado-interno'));
+        this.app.use(this.paths.tramiteexter, require('../routes/tramite-externo'));
         this.app.use(this.paths.derivadoexter, require('../routes/derivado-externo'));
         this.app.use(this.paths.recepcion, require('../routes/recepcion'));
     }

@@ -58,9 +58,9 @@ const recepcionPut = async(req=request, res= response)=>{
         default:
             break;
     }
-    modelo.fecha = fecha;
+    modelo.fechaRecepcion = fecha;
     modelo.usuarioRecepciona = ids;
-    modelo.hora = hora;
+    modelo.horaRecepcion = hora;
     modelo.estado =1;
     await modelo.save();
     res.json({

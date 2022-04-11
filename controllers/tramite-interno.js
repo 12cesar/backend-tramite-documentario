@@ -12,7 +12,7 @@ const getTramiteInternos = async (req = request, res = response) => {
     const { estado } = req.params;
     const {habilitado} = req.query;
     const { id } = req.usuarioToken;
-    const { idArea, idUsuario } = await Userarea.findOne(
+    const { idArea } = await Userarea.findOne(
       {
         attributes: ["id", "idArea", "idUsuario"],
         include: [
@@ -22,6 +22,7 @@ const getTramiteInternos = async (req = request, res = response) => {
           },
           {
             model: Area,
+            as:'areauser',
             attributes: ["id", "nombre"],
           },
         ],
@@ -29,7 +30,6 @@ const getTramiteInternos = async (req = request, res = response) => {
       {
         where: {
           idUsuario: id
-          
         },
       }
     );

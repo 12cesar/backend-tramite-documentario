@@ -31,9 +31,6 @@ Tramiteexterno.init({
     idRemitente:{
         type:DataTypes.INTEGER
     },
-    idUsuario:{
-        type:DataTypes.INTEGER
-    },
     idArea:{
         type:DataTypes.INTEGER
     },
