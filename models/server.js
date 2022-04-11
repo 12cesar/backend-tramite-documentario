@@ -28,7 +28,9 @@ class Server{
             estructura:'/api/estructura',
             uploadestruc:'/api/uploadestructura',
             tramiteinter:'/api/tramiteinterno',
-            derivadointer:'/api/derivadointerno'
+            derivadointer:'/api/derivadointerno',
+            derivadoexter:'/api/derivadorexterno',
+            recepcion:'/api/recepcion'
         }
         //Connect to socket
         this.httpServer = http.createServer(this.app);
@@ -98,6 +100,8 @@ class Server{
         this.app.use(this.paths.uploadestruc, require('../routes/upload-estructura'));
         this.app.use(this.paths.tramiteinter, require('../routes/tramite-interno'));
         this.app.use(this.paths.derivadointer, require('../routes/derivado-interno'));
+        this.app.use(this.paths.derivadoexter, require('../routes/derivado-externo'));
+        this.app.use(this.paths.recepcion, require('../routes/recepcion'));
     }
     listen(){
         this.httpServer.listen(this.port, ()=>{

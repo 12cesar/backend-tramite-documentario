@@ -16,6 +16,9 @@ Recepcionexterno.init({
     },
     estado:{
         type:DataTypes.TINYINT
+    },
+    hora:{
+        type:DataTypes.CHAR
     }
 },{
     sequelize,

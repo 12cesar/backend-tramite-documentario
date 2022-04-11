@@ -45,6 +45,7 @@ const postLogin = async(req=request, res=response)=>{
         },
         {
             model:Area,
+            as:'areauser',
             attributes:['id','nombre']
         }
     ],

@@ -5,11 +5,11 @@ const {
   Recepcioninterno,
   Userarea,
   Area,
+  Usuario,
 } = require("../models");
 
 const getDerivadoInternos = async(req = request, res = response) => {
-
-    const {estado} = req.query;
+    const {habilitado} = req.query;
     const user = req.usuarioToken;
     const {areauser:{id,...data}} = await Userarea.findOne(
         {
@@ -22,19 +22,29 @@ const getDerivadoInternos = async(req = request, res = response) => {
             }
         }
     )
-    const date = new Date();
-    let output = date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0')+ '-' + String(date.getDate()).padStart(2, '0');
-    console.log(output);
-    const separ = String(date).split(' ');
-    const fecha = output;
+    const derivacioninter = await Derivacioninterno.findOne(
+      {
+        include:[
+          {
+            model:Usuario
+          },
+          {
+            model:Tramiteinterno         
+          },
+          {
+            model:Area
+          }
+        ],  
+        where:{
+          destinoArea:id,
+          habilitado:Number(habilitado)
+        }
+      }
+    )
 
   res.json({
     ok: true,
-    date,
-    output,
-    separ,
-    fecha,
-    separ:separ[4]
+    derivacioninter
   });
 };
 

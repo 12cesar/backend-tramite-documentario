@@ -25,7 +25,7 @@ Area.init({
     },
     idDireccion:{
         type:DataTypes.INTEGER
-    }
+    },
 },{
     sequelize,
     tableName:'area'
