@@ -8,5 +8,35 @@
 </head>
 <body>
     <h1>Acceso Denegado</h1>
+    <h1 style = "color:green;" > 
+        GeeksForGeeks 
+    </h1> 
+      
+    <p id = "GFG_UP" style = "font-size: 16px;"></p>
+      
+    <button onclick = "gfg_Run()"> 
+        click here
+    </button>
+      
+    <p id = "GFG_DOWN" style = "color:green; 
+            font-size: 20px; font-weight: bold;">
+    </p>
+      
+    <script>
+        var el_up = document.getElementById("GFG_UP");
+        var el_down = document.getElementById("GFG_DOWN");
+        var num = '10';
+        el_up.innerHTML = 'Number = ' + num;
+          
+        String.prototype.pad = function(String, len) {
+            var str = this;
+            while (str.length < len)
+                str = String + str;
+            return str;
+        }
+        function gfg_Run() {                 
+            el_down.innerHTML = num.pad("0", 5); 
+        } 
+    </script> 
 </body>
 </html>

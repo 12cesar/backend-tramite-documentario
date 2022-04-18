@@ -18,7 +18,8 @@ Recepcioninterno.init({
         type:DataTypes.INTEGER
     },
     estado:{    
-        type:DataTypes.TINYINT
+        type:DataTypes.TINYINT,
+        defaultValue:0
     },
     horaRecepcion:{
         type:DataTypes.CHAR

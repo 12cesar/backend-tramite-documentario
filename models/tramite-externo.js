@@ -19,6 +19,9 @@ Tramiteexterno.init({
     ano:{
         type:DataTypes.CHAR
     },
+    hora:{
+        type:DataTypes.CHAR
+    },
     folio:{
         type:DataTypes.CHAR
     },
@@ -31,11 +34,13 @@ Tramiteexterno.init({
     idRemitente:{
         type:DataTypes.INTEGER
     },
-    idArea:{
-        type:DataTypes.INTEGER
-    },
     estadoTramite:{
-        type:DataTypes.INTEGER
+        type:DataTypes.INTEGER,
+        defaultValue:1
+    },
+    habilitado:{
+        type:DataTypes.TINYINT,
+        defaultValue:1
     }
 },{
     sequelize,

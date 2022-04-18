@@ -9,6 +9,7 @@ const {
 } = require("../models");
 
 const getDerivadoInternos = async(req = request, res = response) => {
+  try {
     const {habilitado} = req.query;
     const user = req.usuarioToken;
     const {areauser:{id,...data}} = await Userarea.findOne(
@@ -22,7 +23,7 @@ const getDerivadoInternos = async(req = request, res = response) => {
             }
         }
     )
-    const derivacioninter = await Derivacioninterno.findOne(
+    const derivacioninter = await Derivacioninterno.findAll(
       {
         include:[
           {
@@ -46,6 +47,12 @@ const getDerivadoInternos = async(req = request, res = response) => {
     ok: true,
     derivacioninter
   });
+  } catch (error) {
+    res.status(400).json({
+      ok:false,
+      msg:`Error al mostrar las derivaciones internas, error: ${error}`
+  })
+  }
 };
 
 const getDerivadoInterno = (req = request, res = response) => {

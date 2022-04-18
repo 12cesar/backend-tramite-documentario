@@ -5,7 +5,10 @@ const sequelize = require('../db/dbMysql');
 class Recepcionexterno extends Model{};
 
 Recepcionexterno.init({
-    fecha:{
+    fechaRecepcion:{
+        type:DataTypes.CHAR
+    },
+    fechaDerivacion:{
         type:DataTypes.CHAR
     },
     usuarioRecepciona:{
@@ -14,10 +17,14 @@ Recepcionexterno.init({
     idDerivacion:{
         type:DataTypes.INTEGER
     },
-    estado:{
-        type:DataTypes.TINYINT
+    estado:{    
+        type:DataTypes.TINYINT,
+        defaultValue:0
     },
-    hora:{
+    horaRecepcion:{
+        type:DataTypes.CHAR
+    },
+    horaDerivacion:{
         type:DataTypes.CHAR
     }
 },{

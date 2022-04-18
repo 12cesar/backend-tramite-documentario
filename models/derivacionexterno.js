@@ -12,9 +12,6 @@ Derivacionexterno.init({
     tramite:{
         type:DataTypes.INTEGER
     },
-    usuarioDerivador:{
-        type:DataTypes.STRING
-    },
     destinoArea:{
         type:DataTypes.INTEGER
     },
@@ -24,6 +21,10 @@ Derivacionexterno.init({
     estado:{
         type:DataTypes.TINYINT,
         defaultValue:0
+    },
+    habilitado:{
+        type:DataTypes.TINYINT,
+        defaultValue:1
     }
 },{
     sequelize,
