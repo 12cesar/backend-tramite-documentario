@@ -5,6 +5,7 @@ const getTipoDocumentos = async (req = request, res = response) => {
   try {
     const { habilitado } = req.query;
     const tipodocumento = await Tipodocumento.findAll({
+      attributes:['id','nombre'],
       where: {
         habilitado: Number(habilitado),
       },

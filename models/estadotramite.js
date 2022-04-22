@@ -11,15 +11,16 @@ Estadotramite.init({
         type:DataTypes.STRING
     },
     estado:{
-        type:DataTypes.STRING
+        type:DataTypes.CHAR 
     },
     habilitado:{
         type:DataTypes.TINYINT,
         defaultValue:1
-    }
+    }    
 },{
     sequelize,
-    tableName:'estado_tramite'
+    tableName:'estado_tramite',
+    timestamps: false,
 });
 
 /* Tramite interno */
