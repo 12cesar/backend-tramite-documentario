@@ -5,9 +5,12 @@ const postValidarSunat = async (req = request, res = response) => {
   try {
     const { tipo } = req.params;
     const { documento: numero } = req.body;
-    let nombre = "";
+    let nombreCompleto = "";
+    let nombre="";
+    let apellido="";
     let documento = "";
     let direccion = "";
+    let data = {};
     switch (tipo) {
       case "1":
         const resp = await sunatApi.get("/dni", {
@@ -15,32 +18,46 @@ const postValidarSunat = async (req = request, res = response) => {
             numero,
           },
         });
-        nombre = `${resp.data.nombre}`;
+        console.log(resp.data);
+        nombreCompleto = `${resp.data.nombre}`;
         documento = `${resp.data.numeroDocumento}`;
         direccion = `${resp.data.direccion}`;
-        break;
+        apellido = `${resp.data.apellidoPaterno} ${resp.data.apellidoMaterno}`,
+        nombre = `${resp.data.nombres}`
+        data = {
+          nombreCompleto,
+          documento,
+          direccion,
+          apellido,
+          nombre
+        }
+        return res.json({
+          ok: true,
+          data,
+        });
       case "2":
         const resp1 = await sunatApi.get("/ruc", {
           params: {
             numero,
           },
         });
-        nombre = `${resp1.data.nombre}`;
+        nombreCompleto = `${resp1.data.nombre}`;
         documento = `${resp1.data.numeroDocumento}`;
         direccion = `${resp1.data.direccion}`;
-        break;
+        data = {
+          nombreCompleto,
+          documento,
+          direccion
+        }
+        return res.json({
+          ok: true,
+          data,
+        });
       default:
         break;
     }
-    const data = {
-        nombre,
-        documento,
-        direccion
-    }
-    res.json({
-      ok: true,
-      data,
-    });
+    
+    
   } catch (error) {
     res.status(400).json({
         ok: false,

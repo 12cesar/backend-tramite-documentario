@@ -16,7 +16,8 @@ Direccion.init({
     }
 },{
     sequelize,
-    tableName:'direccion'
+    tableName:'direccion',
+    timestamps:false
 });
 
 Direccion.hasMany(Area,{

@@ -17,21 +17,15 @@ Tramiteinterno.init({
     ano:{
         type:DataTypes.CHAR
     },
-    destino:{
-        type:DataTypes.STRING
-    },
     idArea:{
         type:DataTypes.INTEGER
     },
-    idUsuario:{
-        type:DataTypes.INTEGER
+    codigoDocumento:{
+        type:DataTypes.CHAR
     },
     estadoTramite:{
         type:DataTypes.INTEGER,
         defaultValue:2
-    },
-    descripcion:{
-        type:DataTypes.TEXT
     },
     habilitado:{
         type:DataTypes.TINYINT,

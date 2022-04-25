@@ -27,11 +27,13 @@ class Server{
             estadotramite:'/api/estadotramite',
             estructura:'/api/estructura',
             uploadestruc:'/api/uploadestructura',
+            documentointerno:'/api/documentointerno',
             tramiteinter:'/api/tramiteinterno',
             tramiteexter:'/api/tramiteexterno',
             derivadointer:'/api/derivadointerno',
             derivadoexter:'/api/derivadorexterno',
-            recepcion:'/api/recepcion'
+            recepcion:'/api/recepcion',
+            
         }
         //Connect to socket
         this.httpServer = http.createServer(this.app);
@@ -99,6 +101,7 @@ class Server{
         this.app.use(this.paths.estadotramite, require('../routes/estado-tramite'));
         this.app.use(this.paths.estructura, require('../routes/estructura'));
         this.app.use(this.paths.uploadestruc, require('../routes/upload-estructura'));
+        this.app.use(this.paths.documentointerno, require('../routes/documento-interno'));
         this.app.use(this.paths.tramiteinter, require('../routes/tramite-interno'));
         this.app.use(this.paths.derivadointer, require('../routes/derivado-interno'));
         this.app.use(this.paths.tramiteexter, require('../routes/tramite-externo'));

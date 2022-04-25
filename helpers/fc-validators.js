@@ -16,7 +16,21 @@ function mayusPrimeraLetra(cadena){
     return descripcion;
 }
 
+function siglaFun(nombre){
+    const separador = nombre.split(' ');
+    const remove = separador.filter((item) => item !== 'de' && item !=='y' && item!=='en' && item !== ',');
+    let sigla = "";
+    console.log(sigla);
+    for (let i = 0; i < remove.length; i++) {
+        sigla += remove[i].charAt(0).toUpperCase();
+            
+    }
+    console.log(sigla);
+    return sigla;
+}
+
 module.exports = {
     mayusPrimeraCadena,
-    mayusPrimeraLetra
+    mayusPrimeraLetra,
+    siglaFun
 }

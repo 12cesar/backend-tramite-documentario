@@ -41,7 +41,8 @@ Usuario.init({
     }
 },{
     sequelize,
-    tableName:'usuario_interno'
+    tableName:'usuario_interno',
+    timestamps:false    
 });
 /* Usuario area */
 Usuario.hasOne(Userarea,{

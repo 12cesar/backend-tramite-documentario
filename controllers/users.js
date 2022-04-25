@@ -47,6 +47,7 @@ const getUser = async (req = request, res = response) => {
   }
 };
 const postUser = async (req = request, res = response) => {
+  console.log(req.body);
   try {
     const {
       nombre,
@@ -59,13 +60,11 @@ const postUser = async (req = request, res = response) => {
       dni,
       tipoCargo,
     } = req.body;
-    const nomMay = nombre.toUpperCase();
-    const apeMay = apellido.toUpperCase();
     const salt = bcryptjs.genSaltSync();
     const hasPassword = bcryptjs.hashSync(password, salt);
     const user = await Usuario.create({
-      nombre: nomMay,
-      apellido: apeMay,
+      nombre,
+      apellido,
       domicilio,
       telefono,
       email,

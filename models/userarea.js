@@ -13,7 +13,8 @@ Userarea.init({
     }
 },{
     sequelize,
-    tableName:'usuario_area'
+    tableName:'usuario_area',
+    timestamps:false
 });
 
 

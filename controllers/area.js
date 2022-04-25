@@ -1,5 +1,6 @@
 const { response } = require("express");
 const { request } = require("express");
+const { siglaFun } = require("../helpers/fc-validators");
 const { Area, Direccion } = require("../models");
 
 const getAreas = async (req = request, res = response) => {
@@ -49,19 +50,21 @@ const getArea = async (req = request, res = response) => {
 };
 const postArea = async (req = request, res = response) => {
   try {
-    const { nombre, descripcion, sigla, idDireccion } = req.body;
+    const { nombre, descripcion, textoNumeracion, idDireccion } = req.body;
+    const sigla = siglaFun(nombre);
     const nomMay = nombre.toUpperCase();
-    const sigMay = sigla.toUpperCase();
+    const textNum = textoNumeracion.toUpperCase();
     const area = await Area.create({
       nombre: nomMay,
       descripcion,
-      sigla: sigMay,
+      sigla,
+      textoNumeracion:textNum,
       idDireccion,
     });
     res.json({
       ok: true,
       msg: "Area creado con exito",
-      area,
+      area
     });
   } catch (error) {
     res.status(400).json({

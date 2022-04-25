@@ -16,7 +16,8 @@ Cargo.init({
     }
 },{
     sequelize,
-    tableName:'cargo'
+    tableName:'cargo',
+    timestamps:false
 });
 
 Cargo.hasMany(Usuario,{

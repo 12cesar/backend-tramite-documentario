@@ -13,10 +13,10 @@ Area.init({
     nombre:{
         type: DataTypes.STRING
     },
-    descripcion:{
-        type:DataTypes.TEXT
-    },
     sigla:{
+        type: DataTypes.STRING
+    },
+    textoNumeracion:{
         type: DataTypes.STRING
     },
     habilitado:{
@@ -28,7 +28,8 @@ Area.init({
     },
 },{
     sequelize,
-    tableName:'area'
+    tableName:'area',
+    timestamps:false
 });
 /* Usuario Area */
 Area.hasOne(Userarea,{
