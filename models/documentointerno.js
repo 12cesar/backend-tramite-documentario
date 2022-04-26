@@ -5,8 +5,8 @@ class Documentointerno extends Model{};
 
 
 Documentointerno.init({
-    codigoDoc:{
-        type:DataTypes.INTEGER
+    codigoDocumento:{
+        type:DataTypes.CHAR
     },
     asunto:{
         type:DataTypes.STRING
@@ -14,24 +14,15 @@ Documentointerno.init({
     fecha:{
         type:DataTypes.CHAR
     },
-    ano:{
-        type:DataTypes.CHAR
-    },
     descripcion:{
         type:DataTypes.TEXT
     },
-    idTramite:{
-        type:DataTypes.INTEGER
-    },
-    estadoDocumento:{
-        type:DataTypes.TINYINT
-    },
-    tipoDocumento:{
-        type:DataTypes.TINYINT
-    },
-    usuario:{
+    referencia:{
         type:DataTypes.STRING
-    }
+    },
+    estadoFirma:{
+        type:DataTypes.TINYINT
+    },
 },{
     sequelize,
     tableName:'documento_interno'

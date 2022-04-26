@@ -1,11 +1,12 @@
 const { request, response } = require("express");
+const { siglaFun } = require("../helpers/fc-validators");
 const { Tipodocumento } = require("../models");
 
 const getTipoDocumentos = async (req = request, res = response) => {
   try {
     const { habilitado } = req.query;
     const tipodocumento = await Tipodocumento.findAll({
-      attributes:['id','nombre'],
+      attributes:['id','nombre','sigla'],
       where: {
         habilitado: Number(habilitado),
       },
@@ -42,8 +43,10 @@ const postTipoDocumento = async (req = request, res = response) => {
   try {
     const { nombre } = req.body;
     const nomMay = nombre.toUpperCase();
+    const sigla = siglaFun(nombre);
     const tipodocumento = await Tipodocumento.create({
       nombre: nomMay,
+      sigla
     });
     res.json({
       ok: true,
@@ -62,9 +65,11 @@ const putTipoDocumento = async (req = request, res = response) => {
     const { id } = req.params;
     const { nombre } = req.body;
     const nomMay = nombre.toUpperCase();
+    const sigla = siglaFun(nombre);
     const tipodocumento = await Tipodocumento.update(
       {
         nombre: nomMay,
+        sigla
       },
       {
         where: {
