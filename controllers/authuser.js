@@ -2,7 +2,7 @@ const bcryptjs = require("bcryptjs");
 const { response } = require("express")
 const { request } = require("express");
 const { generarJWT } = require("../helpers/generar-jwt");
-const { Usuario, Userarea, Area } = require("../models");
+const { Usuario, Userarea, Area, Cargo } = require("../models");
 
 
 const postLogin = async(req=request, res=response)=>{
@@ -36,12 +36,15 @@ const postLogin = async(req=request, res=response)=>{
           user:null
       });
     }
-    const token = await generarJWT(user.id);
+    
     const userarea = await Userarea.findOne({
     include:[
         {
             model:Usuario,
-            attributes:['id','nombre','apellido','tipoCargo']
+            attributes:['id','nombre','apellido','tipoCargo'],
+            include:{
+                model:Cargo
+            }
         },
         {
             model:Area,
@@ -52,12 +55,12 @@ const postLogin = async(req=request, res=response)=>{
     where:{
         idUsuario:user.id
     }
-    })
+    });
+    const token = await generarJWT(user.id, userarea.idArea, userarea.Usuario.Cargo.nombre);
     res.json({
         ok:true,
         userarea,
         token
-        
     })
 }
 

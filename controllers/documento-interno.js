@@ -9,6 +9,7 @@ const postDocumentoInterno = async(req = request,res=response) =>{
     const user = req.usuarioToken;
     const idArea = await funcUserArea(user.id);
     const {fecha,hora,ano} = funDate();
+    
     res.json({
         ok:true,
         body,
