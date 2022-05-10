@@ -5,16 +5,12 @@ const Userarea = require("../models/userarea");
 
 
 const postDocumentoInterno = async(req = request,res=response) =>{
-    const {tipoDocumento,...data} = req.body;
-    const user = req.usuarioToken;
-    const idArea = await funcUserArea(user.id);
-    const {fecha,hora,ano} = funDate();
-    
+    const {archivo}= req.files;
+    const body= req.body;
     res.json({
         ok:true,
         body,
-        user,
-        idArea
+        archivo
     })
 }
 

@@ -21,7 +21,8 @@ Documentointerno.init({
         type:DataTypes.STRING
     },
     estadoFirma:{
-        type:DataTypes.TINYINT
+        type:DataTypes.TINYINT,
+        defaultValue:0
     },
 },{
     sequelize,
