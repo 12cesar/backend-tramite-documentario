@@ -1,6 +1,6 @@
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
-const subirArchivoImg = (files, extensionesValidas=['png','jpg', 'jpeg'], carpeta= '') =>{
+const subirArchivoImg = (files, extensionesValidas=['pdf','docx', 'xlsx','pptx'], carpeta= '') =>{
   
   
     return new Promise((resolve, reject)=>{
