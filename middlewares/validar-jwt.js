@@ -10,7 +10,7 @@ const validarJWT =async (req= request, res = response, next)=>{
     }
 
     try {
-        const {id} = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
+        const {id,idArea} = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
 
         // leer el usuario
 
@@ -28,6 +28,7 @@ const validarJWT =async (req= request, res = response, next)=>{
             })
         }
         req.usuarioToken = usuario;
+        req.idArea = idArea;
         next();
     } catch (error) {
         console.log(error);

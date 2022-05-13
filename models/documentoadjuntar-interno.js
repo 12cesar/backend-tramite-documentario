@@ -9,12 +9,13 @@ Documentoadjuntarinterno.init({
     idDocumento:{
         type:DataTypes.INTEGER
     },
-    documento:{
+    archivo:{
         type:DataTypes.STRING
     }
 },{
     sequelize,
-    tableName:'documento_adjuntar_interno'
+    tableName:'documento_anexo_interno',
+    timestamps:false
 });
 
 module.exports = Documentoadjuntarinterno

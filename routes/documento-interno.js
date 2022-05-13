@@ -1,15 +1,19 @@
 const { Router } = require("express");
-const { postDocumentoInterno } = require("../controllers/documento-interno");
+const { postDocumentoInterno, getDocumentoInternos } = require("../controllers/documento-interno");
 const { validarCampos, validarJWT } = require("../middlewares");
 
 
 const router = Router();
 
+router.get('/',[
+    validarJWT,
+    validarCampos
+], getDocumentoInternos);
 
 router.post('/',[
     validarJWT,
     validarCampos
-], postDocumentoInterno)
+], postDocumentoInterno);
 
 
 

@@ -1,5 +1,6 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require('../db/dbMysql');
+const Codigodocumento = require("./codigodocumento");
 
 
 class Tipodocumento extends Model{};
@@ -21,5 +22,14 @@ Tipodocumento.init({
     timestamps:false
 });
 
+Tipodocumento.hasMany(Codigodocumento,{
+    as:'tipodocumento',
+    foreignKey:'tipoDocumento'
+});
+
+Codigodocumento.belongsTo(Tipodocumento,{
+    foreignKey:'tipoDocumento',
+    sourceKey:'id'
+})
 
 module.exports = Tipodocumento

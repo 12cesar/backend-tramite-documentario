@@ -5,6 +5,7 @@ const fcValidators = require('./fc-validators');
 const dniValidators = require('./dni-validators');
 const fechaValidators = require('./generar-fecha');
 const destinoArra = require('./fc-destino');
+const codigoDocumento = require('./fc-codigo-documento');
 module.exports = {
   ...dbValidators,
   ...generarJWT,
@@ -12,5 +13,6 @@ module.exports = {
   ...fcValidators,
   ...dniValidators,
   ...fechaValidators,
-  ...destinoArra
+  ...destinoArra,
+  ...codigoDocumento
 };

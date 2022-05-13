@@ -1,31 +1,79 @@
 const { response, request } = require("express");
-const { destinoArray, subirArchivoImg, uploadArchivo } = require("../helpers");
-const { funcUserArea } = require("../helpers/fc-area");
+const Sequelize = require('sequelize');
+const { destinoArray, uploadArchivo, codigoDocumen } = require("../helpers");
 const funDate = require("../helpers/generar-fecha");
-const Userarea = require("../models/userarea");
+const { Documentointerno, Documentoadjuntarinterno, Codigodocumento, Area } = require("../models");
+
+
+const getDocumentoInternos = async (req = request, res = response)=>{
+  try {
+    const Op = Sequelize.Op;
+    const idArea = req.idArea;
+    const {sigla} = await Area.findOne({
+      where:{
+        id:idArea
+      }
+    });
+    const buscar = sigla +'%';
+    const documentoInter = await Documentointerno.findAll({
+      where:{
+        codigoDocumento:{
+          [Op.like]:`${sigla}%`
+        }
+      },
+      order:[
+        ['fecha','DESC']
+      ]
+    });
+    res.json({
+      ok:true,
+      msg:'Documentos mostrados con exito',
+      documentoInter
+    })
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      ok:false,
+      msg:error
+    })
+  }
+}
+
 
 const postDocumentoInterno = async (req = request, res = response) => {
   try {
     if (req.files) {
-      const {destino,...data} = req.body;
       const {archivo} = req.files;
-      await uploadArchivo(archivo);
+      const {ano,fecha,hora} =funDate();
+      const {destino,tipoDocumento,...data} = req.body;
+      const idArea = req.idArea;
+      const codigoUnico = await codigoDocumen(idArea,ano,tipoDocumento);
       data.destino = destinoArray(destino);
+      data.codigoDocumento = codigoUnico;
+      data.fecha = fecha;
+      const documentoInter = await Documentointerno.create(data);
+      await uploadArchivo(archivo,Documentoadjuntarinterno,documentoInter.id,'documentoInterno');
       return res.json({
         ok: true,
-        data
+        documentoInter
       });
     }
     if (!req.files) {
-      const {destino,...data} = req.body;
+      const {destino,tipoDocumento,...data} = req.body;
+      const  {ano,fecha,hora} = funDate();
+      const idArea = req.idArea;
+      const codigoUnico = await codigoDocumen(idArea,ano,tipoDocumento);
       data.destino = destinoArray(destino);
+      data.codigoDocumento = codigoUnico;
+      data.fecha = fecha;
+      const documentoInter = await Documentointerno.create(data);
       return res.json({
         ok: true,
-        data
+        documentoInter
       });
     }
   } catch (error) {
-      console.log(error);
+    console.log(error);
     res.status(400).json({
       ok: false,
       msg: error,
@@ -34,5 +82,6 @@ const postDocumentoInterno = async (req = request, res = response) => {
 };
 
 module.exports = {
+  getDocumentoInternos,
   postDocumentoInterno,
 };

@@ -26,7 +26,14 @@ const getTipoDocumentos = async (req = request, res = response) => {
 const getTipoDocumento = async (req = request, res = response) => {
   try {
     const { id } = req.params;
-    const tipodocumento = await Tipodocumento.findByPk(id);
+    
+    const sigMay = id.toUpperCase();
+    console.log(sigMay);
+    const tipodocumento = await Tipodocumento.findOne({
+      where:{
+        sigla:sigMay
+      }
+    });
     res.json({
       ok: true,
       msg: "Tipo de documento mostrado con exito",

@@ -4,21 +4,26 @@ const sequelize = require('../db/dbMysql');
 class Codigodocumento extends Model{};
 
 Codigodocumento.init({
+    codigoUnico:{
+        type : DataTypes.CHAR,
+        primaryKey: true
+    },
     codigo:{
         type:DataTypes.CHAR
     },
-    idArea:{
+    tipoDocumento:{
         type:DataTypes.INTEGER
     },
-    fecha:{
-        type:DataTypes.CHAR
+    idArea:{
+        type:DataTypes.INTEGER
     },
     ano:{
         type:DataTypes.CHAR
     }
 },{
     sequelize,
-    tableName:'codigo_documento'
+    tableName:'codigo_documento',
+    timestamps:false
 });
 
 module.exports = Codigodocumento
