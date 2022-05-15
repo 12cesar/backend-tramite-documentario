@@ -10,6 +10,12 @@ const getUploadEstructura = async (req = request, res = response) => {
   switch (coleccion) {
     case "diresa":
       modelo= await Estructura.findByPk(id);
+      if (!modelo.logoDiresa) {
+        return res.status(400).json({
+          ok:false,
+          msg:'No se encuentra logo'
+        })
+      }
       if (modelo.logoDiresa) {
         const pathImagen = path.join(
           __dirname,
@@ -43,7 +49,6 @@ const getUploadEstructura = async (req = request, res = response) => {
         ok:false,
         msg:'Falta generar esto, converse con el administrador'
       })
-      break;
   }
 };
 
@@ -62,6 +67,7 @@ const putUploadEstructura = async (req = request, res = response) => {
           msg: `No existe una estructura con el id: ${id}`,
         });
       }
+      
       if (modelo.logoDiresa) {
         const pathImagen = path.join(
           __dirname,
@@ -75,7 +81,7 @@ const putUploadEstructura = async (req = request, res = response) => {
       }
       modelo.logoDiresa = await subirArchivoImg(
         req.files,
-        undefined,
+        ['jpg','png','jpeg'],
         "estructura"
       );
       break;
@@ -100,7 +106,7 @@ const putUploadEstructura = async (req = request, res = response) => {
       }
       modelo.logoGobierno = await subirArchivoImg(
         req.files,
-        undefined,
+        ['jpg','png','jpeg'],
         "estructura"
       );
       break;

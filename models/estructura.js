@@ -16,7 +16,8 @@ Estructura.init({
     }
 },{
     sequelize,
-    tableName:'estructura'
+    tableName:'estructura',
+    timestamps:false
 });
 
 
