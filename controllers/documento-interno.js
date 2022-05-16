@@ -44,22 +44,23 @@ const getDocumentoInternos = async (req = request, res = response) => {
 };
 
 const pdfCreate = async (req = request, res = response) => {
-  const image = path.join('file://', __dirname,'../uploads/', 'imagen.jpg');
-  console.log(image);
+  let template = path.join(__dirname,'../uploads/', 'prueba.html')
+  let filename = template.replace('.html', '.pdf')
   let html = fs.readFileSync('./uploads/prueba.html','utf-8');
+  const img = path.join('file://',__dirname,'../uploads/','logo','gobierno.png');
   
   const options = {
     "format": "A4",        // allowed units: A3, A4, A5, Legal, Letter, Tabloid
     "orientation": "portrait", // portrait or landscape
+    
   }
-  html.replace('{{image}}', 'https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8b3Bwb3J0dW5pdHl8ZW58MHx8MHx8&w=1000&q=80');
-  html = html.replace('{{desc}}','hola como estas');
-  html = html.replace('{{asunto}}','hola como estas');
-  pdf.create(html, options).toFile("./uploads/html-pdf.pdf", function (err, resp) {
+  html.replace('{{logo}}',img)
+  pdf.create(html, options).toFile(filename, function (err, resp) {
     if (err) {
       console.log(err);
     } else {
       console.log(resp);
+      console.log(img);
       res.sendFile(resp.filename)
     }
   });
