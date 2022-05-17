@@ -1,11 +1,11 @@
 const { Router } = require("express");
-const { getDocumentoInternoPdf } = require("../controllers/pdf");
+const { getDocumentoInternoPdf, pdfDocInter } = require("../controllers/pdf");
 
 const router = Router();
 
 
 router.get('/',getDocumentoInternoPdf);
-
+router.get('/documento-interno',pdfDocInter);
 
 
 

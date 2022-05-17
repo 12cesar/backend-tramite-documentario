@@ -1,7 +1,30 @@
 const { response,request } = require("express");
 const PDFDocument = require('pdfkit-construct');
-const fs = require('fs');
+const pdf = require("html-pdf");
 const path = require("path");
+var fs = require("fs");
+
+const pdfDocInter = (req=request,res=response)=>{
+  let template = path.join(__dirname,'../uploads/','html-pdf', 'documento-interno.html')
+  let filename = template.replace('.html', '.pdf');
+  let html = fs.readFileSync(template,'utf-8');
+  const options = {
+    "format": "A4",        // allowed units: A3, A4, A5, Legal, Letter, Tabloid
+    "orientation": "portrait", // portrait or landscape
+    "localUrlAccess": true,
+  }
+
+  let ubicacion = path.join(__dirname,'../uploads/','pdf','documento-interno.pdf')
+  pdf.create(html, options).toFile(ubicacion, function (err, resp) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(resp);
+      res.sendFile(resp.filename);
+    }
+  });
+}
+
 
 const getDocumentoInternoPdf = (req=request,res=response)=>{
     const doc = new PDFDocument({
@@ -26,11 +49,36 @@ const getDocumentoInternoPdf = (req=request,res=response)=>{
     doc.setDocumentHeader({
     }, () => {
         doc.lineJoin('miter')
-            .rect(0, 0, doc.page.width, doc.header.options.heightNumber).fill("#ededed");
+            .rect(0, 0, 100, doc.header.options.heightNumber).fill("#fff");
 
-        doc.fill("#115dc8")
-            .fontSize(20)
-            .text("Hello world header", doc.header.x, doc.header.y);
+        doc.fill("black")
+            .fontSize(11)
+            .text("GOBIERNO REGIONAL UCAYALI", doc.header.x, doc.header.y,{
+                align:'center',
+                
+            });
+            doc.fill("black")
+            .fontSize(10)
+            .text("DIRECCION REGIONAL DE SALUD UCAYALI", doc.header.x, doc.header.y+15,{
+                align:'center',
+                
+            });
+            doc.fill("black")
+            .fontSize(9)
+            .text("Oficina Ejecutiva de Planeamiento, Finanzas Gestion Institucional", doc.header.x, doc.header.y+30,{
+                align:'center',
+                
+            });
+            doc.fill("black")
+            .fontSize(8)
+            .text("'Año del Fortalecimiento de la Soberania Nacional'", doc.header.x, doc.header.y+45,{
+                align:'center',
+                
+            });
+            const image1 = path.join(__dirname, '../uploads/','logo','gobierno.png')
+            const image2 = path.join(__dirname, '../uploads/','logo','logo.jpg')
+            doc.image(image1, doc.header.x+45, doc.header.y-8, { width: 50 })
+            doc.image(image2, doc.header.x+470, doc.header.y-7, { width: 65 })
     });
 
     
@@ -47,12 +95,6 @@ const getDocumentoInternoPdf = (req=request,res=response)=>{
         
     });
 
-    doc.text('hola mundo con PDF Kit',100,100);
-    doc.text('hola mundo con PDF Kit',100,200);
-    doc.text('hola mundo con PDF Kit',100,500);
-    doc.text('hola mundo con PDF Kit',100,600);
-    doc.text('hola mundo con PDF Kit',100,1600);
-
     doc.render();
     
     
@@ -62,5 +104,6 @@ const getDocumentoInternoPdf = (req=request,res=response)=>{
 
 
 module.exports = {
+    pdfDocInter,
     getDocumentoInternoPdf
 }
