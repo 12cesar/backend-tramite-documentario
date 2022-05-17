@@ -33,7 +33,7 @@ class Server{
             derivadointer:'/api/derivadointerno',
             derivadoexter:'/api/derivadorexterno',
             recepcion:'/api/recepcion',
-            
+            pdf:'/api/pdf'
         }
         //Connect to socket
         this.httpServer = http.createServer(this.app);
@@ -107,6 +107,7 @@ class Server{
         this.app.use(this.paths.tramiteexter, require('../routes/tramite-externo'));
         this.app.use(this.paths.derivadoexter, require('../routes/derivado-externo'));
         this.app.use(this.paths.recepcion, require('../routes/recepcion'));
+        this.app.use(this.paths.pdf, require('../routes/pdf'));
     }
     listen(){
         this.httpServer.listen(this.port, ()=>{

@@ -24,6 +24,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.13",
     "mysql2": "^2.3.3",
+    "pdfkit": "^0.13.0",
+    "pdfkit-construct": "^1.2.3",
     "sequelize": "^6.17.0",
     "socket.io": "^4.4.0",
     "uuid": "^8.3.2"
