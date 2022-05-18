@@ -2,7 +2,8 @@ const { response,request } = require("express");
 const PDFDocument = require('pdfkit-construct');
 const pdf = require("html-pdf");
 const path = require("path");
-var fs = require("fs");
+const fs = require("fs");
+const pdfHtml = require("pdf-creator-node");
 
 const pdfDocInter = (req=request,res=response)=>{
   let template = path.join(__dirname,'../uploads/','html-pdf', 'documento-interno.html')
@@ -101,9 +102,45 @@ const getDocumentoInternoPdf = (req=request,res=response)=>{
     doc.end();
 }
 
+const getPruebaPdf = (req=request,res=response) =>{
+    const document = path.join(__dirname,'../uploads/','prueba2.html');
+    const img1 = path.join(__dirname,'../uploads/','logo','imagen.png')
+    let html = fs.readFileSync(document,'utf-8');
+    const options = {
+        format: "A3",
+        orientation: "portrait",
+        border: "10mm",
+        
+        footer: {
+            height: "28mm",
+            contents: {
+                first: '<span style="color: #444;">{{page}}</span>/<span>{{pages}}</span>',
+                2: 'Second page', // Any page number is working. 1-based index
+                default: '<span style="color: #444;">{{page}}</span>/<span>{{pages}}</span>', // fallback value
+                last: 'Last Page'
+            }
+        }
+    };
+    const ubicacion = path.join(__dirname,'../uploads/prueba2.pdf');
+    const documentPdf = {
+        html: html,
+        data: {},
+        path: `${ubicacion}`,
+        type: "",
+      };
 
+pdfHtml.create(documentPdf, options)
+  .then((resp) => {
+    console.log(resp);
+    res.sendFile(resp.filename);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+}
 
 module.exports = {
     pdfDocInter,
-    getDocumentoInternoPdf
+    getDocumentoInternoPdf,
+    getPruebaPdf
 }
