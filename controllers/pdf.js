@@ -4,7 +4,7 @@ const pdf = require("html-pdf");
 const path = require("path");
 const fs = require("fs");
 const pdfHtml = require("pdf-creator-node");
-const {Documentointerno, Tipodocumento, Codigodocumento, Area} = require("../models");
+const {Documentointerno, Tipodocumento, Codigodocumento, Area, Userarea, Usuario} = require("../models");
 
 const pdfDocInter = async(req=request,res=response)=>{
 
@@ -14,7 +14,7 @@ const pdfDocInter = async(req=request,res=response)=>{
           codigoDocumento:codigo
       }
   });
-  let template = path.join(__dirname,'../uploads/','html-pdf', 'documento-interno.html')
+  let template = path.join(__dirname,'../document/','html', 'documento-interno.html')
   let filename = template.replace('.html', '.pdf');
   let html = fs.readFileSync(template,'utf-8');
   
@@ -53,7 +53,7 @@ const pdfDocInter = async(req=request,res=response)=>{
   const option = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
   html = html.replace("{{documento}}",`${tipoDoc.nombre} N° ${codigoArray[1]} - ${codigoUniq.ano}- GRU-DIRESA-${area.textoNumeracion}`)
   html = html.replace("{{a}}",'Ing. Doris Jeamile Irene Diaz');
-  html = html.replace("{{destino}}",'DIRECTORA DE LA OFICINA DE ESTADISTICA, INFORMATICA Y TELECOMUNICACIONESasassaasasasasasa');
+  html = html.replace("{{destino}}",'DIRECTORA DE LA OFICINA DE ESTADISTICA, INFORMATICA Y TELECOMUNICACIONES');
   html = html.replace("{{asunto}}",`${doc.asunto}`);
   if (documentoInterno.referencia) {
       html= html.replace('{{referencia}}',`<h5>Referencia <b style="margin-left: 15px;
@@ -61,11 +61,32 @@ const pdfDocInter = async(req=request,res=response)=>{
   }else{
       html=html.replace('{{referencia}}','');
   }
+  const destinoArray = documentoInterno.destino.split(',');
+  console.log(destinoArray);
+  const userarea = await Userarea.findOne({
+      include:[
+        {
+            model:Usuario,
+            where:{
+                tipoCargo:2,
+                habilitado:1
+            }
+        },
+        {
+            model:Area,
+            as:'areauser'
+        }
+      ],
+      where:{
+          idArea:destinoArray[0]
+      }
+  });
+  console.log(userarea);
   html = html.replace("{{fecha}}",`${event.toLocaleDateString('pe-PE', option)}`);
   html = html.replace("{{descripcion}}",`${doc.descripcion}`);
   html = html.replace("{{diresa}}","Direccion Regional de Salud Ucayali");
   html = html.replace("{{area}}",`${area.nombre}`);
-  let ubicacion = path.join(__dirname,'../uploads/','pdf','documento-interno.pdf');
+  let ubicacion = path.join(__dirname,'../document/','pdf','documento-interno.pdf');
   pdf.create(html, options).toFile(ubicacion, function (err, resp) {
     if (err) {
       console.log(err);
