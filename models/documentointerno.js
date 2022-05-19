@@ -26,6 +26,10 @@ Documentointerno.init({
     },
     destino:{
         type:DataTypes.CHAR
+    },
+    estadoDerivado:{
+        type: DataTypes.TINYINT,
+        defaultValue:0
     }
 },{
     sequelize,

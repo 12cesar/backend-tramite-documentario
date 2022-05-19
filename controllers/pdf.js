@@ -4,88 +4,32 @@ const pdf = require("html-pdf");
 const path = require("path");
 const fs = require("fs");
 const pdfHtml = require("pdf-creator-node");
-const {Documentointerno, Tipodocumento, Codigodocumento, Area, Userarea, Usuario} = require("../models");
+const { fcPdfInterno } = require("../helpers");
 
 const pdfDocInter = async(req=request,res=response)=>{
 
   const {codigo} = req.query;
-  const doc = await Documentointerno.findOne({
-      where:{
-          codigoDocumento:codigo
-      }
-  });
   let template = path.join(__dirname,'../document/','html', 'documento-interno.html')
   let filename = template.replace('.html', '.pdf');
   let html = fs.readFileSync(template,'utf-8');
-  
   const options = {
     "format": "A4",        // allowed units: A3, A4, A5, Legal, Letter, Tabloid
     "orientation": "portrait", // portrait or landscape
   }
-  const codigoArray = codigo.split('-');
-  const documentoInterno = await Documentointerno.findOne({
-      where:{
-          codigoDocumento:codigo
-      }
-  })
-  const tipoDoc = await Tipodocumento.findOne({
-      where:{
-          sigla:codigoArray[2]
-      }
-  });
-  const codigoUniq = await Codigodocumento.findOne({
-      where:{
-          codigoUnico:codigo
-      }
-  });
-  const area = await Area.findOne({
-      where:{
-          sigla:codigoArray[0]
-      }
-  })
-  console.log(tipoDoc);
-  console.log(codigoArray);
-  console.log(codigoUniq);
-  console.log(area);
-  console.log(documentoInterno.referencia);
-  const arrayFe = doc.fecha.split('-');
-  const event = new Date(Date.UTC(Number(arrayFe[0]), Number(arrayFe[1])-1, 13, 3, 0, 0));
-  const option = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-  html = html.replace("{{documento}}",`${tipoDoc.nombre} N° ${codigoArray[1]} - ${codigoUniq.ano}- GRU-DIRESA-${area.textoNumeracion}`)
-  html = html.replace("{{a}}",'Ing. Doris Jeamile Irene Diaz');
-  html = html.replace("{{destino}}",'DIRECTORA DE LA OFICINA DE ESTADISTICA, INFORMATICA Y TELECOMUNICACIONES');
-  html = html.replace("{{asunto}}",`${doc.asunto}`);
-  if (documentoInterno.referencia) {
+  const {destino, area, descripcion, fecha, referencia, nombre,numero,ano,textoNumeracion, asunto} = await fcPdfInterno(codigo);
+  html = html.replace("{{documento}}",`${nombre} N° ${numero} - ${ano}- GRU-DIRESA-${textoNumeracion}`)
+  html = html.replace("{{asunto}}",`${asunto}`);
+  if (referencia) {
       html= html.replace('{{referencia}}',`<h5>Referencia <b style="margin-left: 15px;
-      margin-right: 20px;">:</b> ${documentoInterno.referencia}</h5>`)
+      margin-right: 17px;">:</b> ${referencia}</h5>`)
   }else{
       html=html.replace('{{referencia}}','');
   }
-  const destinoArray = documentoInterno.destino.split(',');
-  console.log(destinoArray);
-  const userarea = await Userarea.findOne({
-      include:[
-        {
-            model:Usuario,
-            where:{
-                tipoCargo:2,
-                habilitado:1
-            }
-        },
-        {
-            model:Area,
-            as:'areauser'
-        }
-      ],
-      where:{
-          idArea:destinoArray[0]
-      }
-  });
-  console.log(userarea);
-  html = html.replace("{{fecha}}",`${event.toLocaleDateString('pe-PE', option)}`);
-  html = html.replace("{{descripcion}}",`${doc.descripcion}`);
+  html = html.replace('{{destino}}',destino);
+  html = html.replace("{{fecha}}",`${fecha}`);
+  html = html.replace("{{descripcion}}",`${descripcion}`);
   html = html.replace("{{diresa}}","Direccion Regional de Salud Ucayali");
-  html = html.replace("{{area}}",`${area.nombre}`);
+  html = html.replace("{{area}}",`${area}`);
   let ubicacion = path.join(__dirname,'../document/','pdf','documento-interno.pdf');
   pdf.create(html, options).toFile(ubicacion, function (err, resp) {
     if (err) {
@@ -167,8 +111,6 @@ const getDocumentoInternoPdf = (req=request,res=response)=>{
     });
 
     doc.render();
-    
-    
     doc.end();
 }
 

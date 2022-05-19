@@ -11,6 +11,9 @@ Tramiteinterno.init({
     asunto:{
         type:DataTypes.STRING
     },
+    referencia:{
+        type:DataTypes.STRING
+    },  
     fecha:{
         type:DataTypes.CHAR
     },
@@ -23,13 +26,11 @@ Tramiteinterno.init({
     codigoDocumento:{
         type:DataTypes.CHAR
     },
-    estadoTramite:{
-        type:DataTypes.INTEGER,
-        defaultValue:2
+    observacion:{
+        type:DataTypes.STRING
     },
-    habilitado:{
-        type:DataTypes.TINYINT,
-        defaultValue:1
+    hora:{
+        type:DataTypes.CHAR
     }
 },{
     sequelize,
