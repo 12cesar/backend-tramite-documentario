@@ -34,14 +34,6 @@ Derivacioninterno.init({
     tableName:'derivacion_interno'
 });
 
-Derivacioninterno.hasMany(Recepcioninterno,{
-    as:'recepcioninterno',
-    foreignKey:'idDerivacion'
-});
-Recepcioninterno.belongsTo(Derivacioninterno,{
-    foreignKey:'idDerivacion',
-    sourceKey:'id'
-});
 
 
 module.exports = Derivacioninterno

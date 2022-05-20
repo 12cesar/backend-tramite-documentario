@@ -13,6 +13,7 @@ const path = require("path");
 var fs = require("fs");
 const getDocumentoInternos = async (req = request, res = response) => {
   try {
+    const {estadoDerivado} = req.query;
     const Op = Sequelize.Op;
     const idArea = req.idArea;
     const { sigla } = await Area.findOne({
@@ -26,6 +27,7 @@ const getDocumentoInternos = async (req = request, res = response) => {
         codigoDocumento: {
           [Op.like]: `${sigla}%`,
         },
+        estadoDerivado
       },
       order: [["fecha", "DESC"]],
     });

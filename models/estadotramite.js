@@ -20,16 +20,5 @@ Estadotramite.init({
     timestamps: false,
 });
 
-/* Tramite interno */
-Estadotramite.hasMany(Tramiteinterno,{
-    as:'estadotramiteinterno',
-    foreignKey:'estadoTramite'
-});
-
-Tramiteinterno.belongsTo(Estadotramite,{
-    foreignKey:'estadoTramite',
-    sourceKey:'id'
-})
-
 
 module.exports = Estadotramite;

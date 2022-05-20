@@ -61,13 +61,24 @@ const fcPdfInterno = async (codigo) => {
       },
     });
 
-    if ([i] < 1) {
-      destino += `<h5 style="margin-top:-15px;
-        margin-left: 113px; font-size:12px;">${userarea.Usuario.nombre.toUpperCase()} ${userarea.Usuario.apellido.toUpperCase()}</h5>
-        <h6 style="margin-bottom: -15px;">${userarea.areauser.nombre}</h6>`;
-    } else if ([i] >= 1) {
-      destino += `<h5 style="margin-left: 113px; font-size:12px;">${userarea.Usuario.nombre.toUpperCase()} ${userarea.Usuario.apellido.toUpperCase()}</h5>
-        <h6 style="margin-bottom: -15px;">${userarea.areauser.nombre}</h6>`;
+    if (userarea) {
+      if ([i] < 1) {
+        destino += `<h5 style="margin-top:-15px;
+          margin-left: 113px; font-size:12px;">${userarea.Usuario.nombre.toUpperCase()} ${userarea.Usuario.apellido.toUpperCase()}</h5>
+          <h6 style="margin-bottom: -15px;">${userarea.areauser.nombre}</h6>`;
+      } else if ([i] >= 1) {
+        destino += `<h5 style="margin-left: 113px; font-size:12px;">${userarea.Usuario.nombre.toUpperCase()} ${userarea.Usuario.apellido.toUpperCase()}</h5>
+          <h6 style="margin-bottom: -15px;">${userarea.areauser.nombre}</h6>`;
+      }
+    }else{
+      if ([i] < 1) {
+        destino += `<h5 style="margin-top:-15px;
+          margin-left: 113px; font-size:12px;">null</h5>
+          <h6 style="margin-bottom: -15px;">null</h6>`;
+      } else if ([i] >= 1) {
+        destino += `<h5 style="margin-left: 113px; font-size:12px;">null</h5>
+          <h6 style="margin-bottom: -15px;">null</h6>`;
+      }
     }
   }
 

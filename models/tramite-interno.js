@@ -6,7 +6,8 @@ class Tramiteinterno extends Model{};
 
 Tramiteinterno.init({
     codigo:{
-        type:DataTypes.CHAR
+        type:DataTypes.CHAR,
+        primaryKey:true
     },
     asunto:{
         type:DataTypes.STRING
@@ -34,16 +35,8 @@ Tramiteinterno.init({
     }
 },{
     sequelize,
-    tableName:'tramite_interno'
-});
-
-Tramiteinterno.hasMany(Derivacioninterno,{
-    as:'derivacioninterno',
-    foreignKey:'tramite'
-});
-Derivacioninterno.belongsTo(Tramiteinterno,{
-    foreignKey:'tramite',
-    sourceKey:'id'
+    tableName:'tramite_interno',
+    timestamps:false
 });
 
 
