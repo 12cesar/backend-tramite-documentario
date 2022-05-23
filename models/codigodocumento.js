@@ -26,4 +26,5 @@ Codigodocumento.init({
     timestamps:false
 });
 
+
 module.exports = Codigodocumento
