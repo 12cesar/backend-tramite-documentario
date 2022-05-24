@@ -3,6 +3,7 @@ const sequelize = require('../db/dbMysql');
 const Codigodocumento = require("./codigodocumento");
 const Derivacionexterno = require("./derivacionexterno");
 const Derivacioninterno = require("./derivacioninterno");
+const SeguimientoInterno = require("./seguimiento-interno");
 const Tramiteinterno = require("./tramite-interno");
 const Userarea = require("./userarea");
 
@@ -80,6 +81,16 @@ Area.hasMany(Tramiteinterno, {
 });
 Tramiteinterno.belongsTo(Area,{
     foreignKey:'idArea',
+    sourceKey:'id'
+});
+
+/* Seguimiento Interno */
+Area.hasMany(SeguimientoInterno,{
+    as:'areaseguimientointer',
+    foreignKey:'idDestino'
+});
+SeguimientoInterno.belongsTo(Area,{
+    foreignKey:'idDestino',
     sourceKey:'id'
 })
 module.exports = Area;

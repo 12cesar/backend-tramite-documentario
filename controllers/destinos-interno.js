@@ -1,6 +1,6 @@
 const { request, response } = require("express");
 const funDate = require("../helpers/generar-fecha");
-const { DestinoInterno, Tramiteinterno } = require("../models");
+const { DestinoInterno, Tramiteinterno, SeguimientoInterno } = require("../models");
 
 const getDestinosInternos = async (req = request, res = response) => {
   try {
@@ -51,15 +51,34 @@ const deleteDestinosInterno = async (req = request, res = response) => {
 };
 
 const recepcionarDestinosInterno = async (req = request, res = response) => {
+  try {
     const {id} = req.params;
     const {ano,fecha,hora} = funDate();
-    /* const destinos = await DestinoInterno.update({
+    const destinos = await DestinoInterno.update({
         estadoRecepcion:1
-    }) */
+    },{where:{
+      id
+    }});
+    const seguimiento = await SeguimientoInterno.update({
+      fechaRecepcion:fecha,
+      horaRecepcion:hora
+    },{
+      where:{
+        idDestino:id
+      }
+    });
     res.json({
       ok: true,
-      id
+      msg:'Tramite recepcionado con exito',
+      destinos
     });
+  } catch (error) {
+    res.status(400).json({
+      ok:false,
+      msg:`Error al recepcionar el tramite interno`,
+      error
+    })
+  }
   };
 
 module.exports = {

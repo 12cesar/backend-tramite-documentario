@@ -34,6 +34,7 @@ class Server{
             derivadoexter:'/api/derivadorexterno',
             recepcion:'/api/recepcion',
             destinointer:'/api/destinointerno',
+            seguimientointer:'/api/seguimientointerno',
             pdf:'/api/pdf'
         }
         //Connect to socket
@@ -109,6 +110,7 @@ class Server{
         this.app.use(this.paths.derivadoexter, require('../routes/derivado-externo'));
         this.app.use(this.paths.recepcion, require('../routes/recepcion'));
         this.app.use(this.paths.destinointer, require('../routes/destinos-interno'));
+        this.app.use(this.paths.seguimientointer, require('../routes/seguimiento-interno'));
         this.app.use(this.paths.pdf, require('../routes/pdf'));
     }
     listen(){

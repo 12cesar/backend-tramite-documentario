@@ -9,6 +9,7 @@ const {
   Documentointerno,
   SeguimientoInterno,
   DestinoInterno,
+  Codigodocumento,
 } = require("../models");
 
 const getTramiteInternos = async (req = request, res = response) => {
@@ -20,6 +21,9 @@ const getTramiteInternos = async (req = request, res = response) => {
           model: Area,
           attributes: ["id", "nombre"],
         },
+        {
+          model:Codigodocumento
+        }
       ],
       where: {
         idArea
@@ -40,25 +44,19 @@ const getTramiteInternos = async (req = request, res = response) => {
 
 const getTramiteInterno = async (req = request, res = response) => {
   try {
-    const { id } = req.params;
+    const { codigo } = req.params;
     const tramiteinter = await Tramiteinterno.findOne({
       include: [
         {
-          model: Area,
-          attributes: ["id", "nombre"],
+          model: Area
         },
         {
-          model: Usuario,
-          attributes: ["id", "nombre", "apellido"],
-        },
-        {
-          model: Estadotramite,
-          attributes: ["id", "nombre"],
-        },
+          model:Codigodocumento
+        }
       ],
-      where: {
-        id,
-      },
+      where:{
+        codigo
+      }
     });
     res.json({
       ok: true,

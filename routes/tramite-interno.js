@@ -9,7 +9,7 @@ router.get('/',[
     validarJWT,
     validarCampos
 ],getTramiteInternos);
-router.get('/:id',getTramiteInterno);
+router.get('/:codigo',getTramiteInterno);
 router.post('/',[
     validarJWT,
     validarCampos
