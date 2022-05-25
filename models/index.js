@@ -24,6 +24,8 @@ const Tramiteexterno = require("./tramite-externo");
 const Tramiteinterno = require("./tramite-interno");
 const Tramiteadjuntarexterno = require("./tramiteadjuntar-externo");
 const Userarea = require("./userarea");
+const DestinoInterno = require("./destino-interno");
+const SeguimientoInterno = require("./seguimiento-interno")
 module.exports = {
   Server,
   Usuario,
@@ -50,5 +52,7 @@ module.exports = {
   Tramiteexterno,
   Tramiteinterno,
   Tramiteadjuntarexterno,
-  Userarea
+  Userarea,
+  DestinoInterno,
+  SeguimientoInterno
 };

@@ -1,38 +1,20 @@
 const { request, response } = require("express");
+const funDate = require("../helpers/generar-fecha");
 const {
   Userarea,
   Usuario,
   Area,
   Tramiteinterno,
   Estadotramite,
+  Documentointerno,
+  SeguimientoInterno,
+  DestinoInterno,
+  Codigodocumento,
 } = require("../models");
 
 const getTramiteInternos = async (req = request, res = response) => {
   try {
-    const { estado } = req.params;
-    const {habilitado} = req.query;
-    const { id } = req.usuarioToken;
-    const { idArea } = await Userarea.findOne(
-      {
-        attributes: ["id", "idArea", "idUsuario"],
-        include: [
-          {
-            model: Usuario,
-            attributes: ["id", "nombre", "apellido"],
-          },
-          {
-            model: Area,
-            as:'areauser',
-            attributes: ["id", "nombre"],
-          },
-        ],
-      },
-      {
-        where: {
-          idUsuario: id
-        },
-      }
-    );
+    const idArea = req.idArea;
     const tramiteinter = await Tramiteinterno.findAll({
       include: [
         {
@@ -40,18 +22,11 @@ const getTramiteInternos = async (req = request, res = response) => {
           attributes: ["id", "nombre"],
         },
         {
-          model: Usuario,
-          attributes: ["id", "nombre", "apellido"],
-        },
-        {
-          model: Estadotramite,
-          attributes: ["id", "nombre"],
-        },
+          model:Codigodocumento
+        }
       ],
       where: {
-        idArea,
-        estadoTramite: estado,
-        habilitado:Number(habilitado)
+        idArea
       },
     });
     res.json({
@@ -69,25 +44,19 @@ const getTramiteInternos = async (req = request, res = response) => {
 
 const getTramiteInterno = async (req = request, res = response) => {
   try {
-    const { id } = req.params;
+    const { codigo } = req.params;
     const tramiteinter = await Tramiteinterno.findOne({
       include: [
         {
-          model: Area,
-          attributes: ["id", "nombre"],
+          model: Area
         },
         {
-          model: Usuario,
-          attributes: ["id", "nombre", "apellido"],
-        },
-        {
-          model: Estadotramite,
-          attributes: ["id", "nombre"],
-        },
+          model:Codigodocumento
+        }
       ],
-      where: {
-        id,
-      },
+      where:{
+        codigo
+      }
     });
     res.json({
       ok: true,
@@ -103,40 +72,61 @@ const getTramiteInterno = async (req = request, res = response) => {
 };
 const postTramiteInterno = async (req = request, res = response) => {
   try {
-    const { ano, ...data } = req.body;
-    const { id } = req.usuarioToken;
-    const { idArea, idUsuario } = await Userarea.findOne(
-      {
-        attributes: ["id", "idArea", "idUsuario"],
-        include: [
-          {
-            model: Usuario,
-            attributes: ["id", "nombre", "apellido"],
-          },
-          {
-            model: Area,
-            attributes: ["id", "nombre"],
-          },
-        ],
-      },
-      { where: { idUsuario: id } }
-    );
+    const {codigoDocumento,observacion, accion} = req.body;
+    const idArea= req.idArea;
+    const {ano,fecha,hora} = funDate();
+    const documentoInterno = await Documentointerno.findOne({
+      where:{
+        codigoDocumento
+      }
+    });
     const count = await Tramiteinterno.count({
-      where: {
-        idArea,
-        ano,
-      },
+      where:{
+        ano
+      }
     });
-    data.codigo = `${count + 1}`;
-    data.ano = ano;
-    data.idArea = idArea;
-    data.idUsuario = idUsuario;
-    const tramiteinter = await Tramiteinterno.create(data);
+    const numero = `${count+1}`;
+    const codigo = numero.padStart(5, "0");
+    const destino = documentoInterno.destino;
+    const arrayDest = destino.split(',');
+    const data = {
+      codigo,
+      asunto:documentoInterno.asunto,
+      referencia:documentoInterno.referencia,
+      fecha,
+      ano,
+      idArea,
+      codigoDocumento,
+      observacion,
+      hora
+    }
+    
+    const tramiteInterno = await Tramiteinterno.create(data);
+    for (let i = 0; i < arrayDest.length; i++) {
+      const {id} = await DestinoInterno.create({
+        codigoTramite: tramiteInterno.codigo,
+        destinoArea:arrayDest[i],
+        accion
+      });
+      const seguimiento = await SeguimientoInterno.create({
+        fechaDerivado:fecha,
+        horaDerivado:hora,
+        codigoTramite:tramiteInterno.codigo,
+        idDestino:id
+      });
+    }
+    const documentoInter = await Documentointerno.update({
+      estadoDerivado:1
+    },{
+      where:{
+        codigoDocumento
+      }
+    });
     res.json({
-      ok: true,
-      msg: "Tramite interno creado con exito",
-      tramiteinter,
-    });
+      ok:true,
+      msg:`Se creo el tramite N° ${tramiteInterno.codigo}`, 
+      tramiteInterno
+    })
   } catch (error) {
     res.status(400).json({
       ok: false,

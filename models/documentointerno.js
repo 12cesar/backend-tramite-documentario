@@ -26,11 +26,16 @@ Documentointerno.init({
     },
     destino:{
         type:DataTypes.CHAR
+    },
+    estadoDerivado:{
+        type: DataTypes.TINYINT,
+        defaultValue:0
     }
 },{
     sequelize,
     tableName:'documento_interno',
     timestamps:false
 });
+
 
 module.exports = Documentointerno;

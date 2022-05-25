@@ -1,16 +1,21 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require('../db/dbMysql');
 const Derivacioninterno = require("./derivacioninterno");
+const DestinoInterno = require("./destino-interno");
 
 class Tramiteinterno extends Model{};
 
 Tramiteinterno.init({
     codigo:{
-        type:DataTypes.CHAR
+        type:DataTypes.CHAR,
+        primaryKey:true
     },
     asunto:{
         type:DataTypes.STRING
     },
+    referencia:{
+        type:DataTypes.STRING
+    },  
     fecha:{
         type:DataTypes.CHAR
     },
@@ -23,27 +28,26 @@ Tramiteinterno.init({
     codigoDocumento:{
         type:DataTypes.CHAR
     },
-    estadoTramite:{
-        type:DataTypes.INTEGER,
-        defaultValue:2
+    observacion:{
+        type:DataTypes.STRING
     },
-    habilitado:{
-        type:DataTypes.TINYINT,
-        defaultValue:1
+    hora:{
+        type:DataTypes.CHAR
     }
 },{
     sequelize,
-    tableName:'tramite_interno'
+    tableName:'tramite_interno',
+    timestamps:false
 });
 
-Tramiteinterno.hasMany(Derivacioninterno,{
-    as:'derivacioninterno',
-    foreignKey:'tramite'
-});
-Derivacioninterno.belongsTo(Tramiteinterno,{
-    foreignKey:'tramite',
-    sourceKey:'id'
+Tramiteinterno.hasMany(DestinoInterno,{
+    as:'codTramite',
+    foreignKey:'codigoTramite'
 });
 
+DestinoInterno.belongsTo(Tramiteinterno,{
+    foreignKey:'codigoTramite',
+    sourceKey:'codigo'
+})
 
 module.exports = Tramiteinterno;

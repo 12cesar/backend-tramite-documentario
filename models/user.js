@@ -54,17 +54,6 @@ Userarea.belongsTo(Usuario,{
     sourceKey:'id'
 });
 
-/* Tramite interno */
-
-Usuario.hasMany(Tramiteinterno,{
-    as:'usuariotramiteinterno',
-    foreignKey:'idUsuario'
-});
-Tramiteinterno.belongsTo(Usuario,{
-    foreignKey:'idUsuario',
-    sourceKey:'id'
-});
-
 /* Derivacion interno */
 
 Usuario.hasMany(Derivacioninterno,{
