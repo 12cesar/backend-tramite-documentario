@@ -35,6 +35,7 @@ class Server{
             recepcion:'/api/recepcion',
             destinointer:'/api/destinointerno',
             seguimientointer:'/api/seguimientointerno',
+            firmadocumentinter:'/api/firmadocumentointerno',
             pdf:'/api/pdf'
         }
         //Connect to socket
@@ -111,6 +112,7 @@ class Server{
         this.app.use(this.paths.recepcion, require('../routes/recepcion'));
         this.app.use(this.paths.destinointer, require('../routes/destinos-interno'));
         this.app.use(this.paths.seguimientointer, require('../routes/seguimiento-interno'));
+        this.app.use(this.paths.firmadocumentinter, require('../routes/firmaDocumentoInterno'));
         this.app.use(this.paths.pdf, require('../routes/pdf'));
     }
     listen(){

@@ -14,7 +14,8 @@ Documentofirmainterno.init({
     }
 },{
     sequelize,
-    tableName:'documento_firma_interno'
+    tableName:'documento_firma_interno',
+    timestamps:false
 });
 
 
