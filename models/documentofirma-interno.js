@@ -9,7 +9,7 @@ Documentofirmainterno.init({
     idDocumento:{
         type:DataTypes.INTEGER
     },
-    documentoFirma:{
+    archivo:{
         type:DataTypes.STRING
     }
 },{

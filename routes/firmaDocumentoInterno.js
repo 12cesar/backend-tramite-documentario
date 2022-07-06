@@ -1,12 +1,12 @@
 const { Router } = require("express");
-const { postFirmaDocumento } = require("../controllers/firmaDocumentoInterno");
+const { postFirmaDocumento, getFirmaDocumento } = require("../controllers/firmaDocumentoInterno");
 const { validarCampos, validarJWT, validarArchivoSubir } = require("../middlewares");
 
 
 
 const router = Router();
 
-
+router.get('/:codigo',getFirmaDocumento)
 
 router.post('/',[
     validarJWT,

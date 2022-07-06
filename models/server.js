@@ -36,6 +36,8 @@ class Server{
             destinointer:'/api/destinointerno',
             seguimientointer:'/api/seguimientointerno',
             firmadocumentinter:'/api/firmadocumentointerno',
+            anexointerno:'/api/anexointerno',
+            mostraranexo:'/api/mostraranexo',
             pdf:'/api/pdf'
         }
         //Connect to socket
@@ -113,6 +115,8 @@ class Server{
         this.app.use(this.paths.destinointer, require('../routes/destinos-interno'));
         this.app.use(this.paths.seguimientointer, require('../routes/seguimiento-interno'));
         this.app.use(this.paths.firmadocumentinter, require('../routes/firmaDocumentoInterno'));
+        this.app.use(this.paths.anexointerno, require('../routes/pdfAnexo'));
+        this.app.use(this.paths.mostraranexo, require('../routes/mostrarAnexo'));
         this.app.use(this.paths.pdf, require('../routes/pdf'));
     }
     listen(){
