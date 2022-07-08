@@ -8,7 +8,7 @@ const router = Router();
 
 
 
-router.get('/',getDetalleDestinoInterno);
+router.get('/:codigo',getDetalleDestinoInterno);
 router.post('/',postDetalleDestinoInterno);
 
 

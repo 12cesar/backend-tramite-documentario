@@ -5,14 +5,35 @@ const {
   DestinoInterno,
   SeguimientoInterno,
   Documentointerno,
+  RespuestaTramite,
 } = require("../models");
 
 const getDetalleDestinoInterno = async (req = request, res = response) => {
-  const detalle = await DetalleDestinoInterno.findAll();
+  try {
+    const {codigo}=req.params;
+  const detalle = await DetalleDestinoInterno.findAll({
+    include:[
+      {
+        model:DestinoInterno,
+        where:{
+          codigoTramite:codigo
+        }
+
+      },{
+        model:RespuestaTramite
+      }
+    ]
+  });
   res.json({
     ok: true,
-    detalle,
+    detalle
   });
+  } catch (error) {
+    res.status(400).json({
+      ok:false,
+      msg:`Error al mostrar el detalle, error: ${error}`
+    })
+  }
 };
 
 const postDetalleDestinoInterno = async (req = request, res = response) => {
