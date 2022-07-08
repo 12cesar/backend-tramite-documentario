@@ -25,7 +25,10 @@ const Tramiteinterno = require("./tramite-interno");
 const Tramiteadjuntarexterno = require("./tramiteadjuntar-externo");
 const Userarea = require("./userarea");
 const DestinoInterno = require("./destino-interno");
-const SeguimientoInterno = require("./seguimiento-interno")
+const SeguimientoInterno = require("./seguimiento-interno");
+const TipoEnvio = require("./tipo-envio");
+const RespuestaTramite = require("./respuesta-tramite");
+const DetalleDestinoInterno = require("./detalle-destino-interno");
 module.exports = {
   Server,
   Usuario,
@@ -54,5 +57,8 @@ module.exports = {
   Tramiteadjuntarexterno,
   Userarea,
   DestinoInterno,
-  SeguimientoInterno
+  SeguimientoInterno,
+  TipoEnvio,
+  RespuestaTramite,
+  DetalleDestinoInterno
 };

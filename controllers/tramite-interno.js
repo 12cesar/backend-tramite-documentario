@@ -112,7 +112,7 @@ const postTramiteInterno = async (req = request, res = response) => {
         fechaDerivado:fecha,
         horaDerivado:hora,
         codigoTramite:tramiteInterno.codigo,
-        idDestino:id
+        idDestino:arrayDest[i]
       });
     }
     const documentoInter = await Documentointerno.update({

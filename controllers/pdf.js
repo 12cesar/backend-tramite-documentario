@@ -28,7 +28,7 @@ const pdfDocInter = async(req=request,res=response)=>{
   html = html.replace('{{destino}}',destino);
   html = html.replace("{{fecha}}",`${fecha}`);
   html = html.replace("{{descripcion}}",`${descripcion}`);
-  html = html.replace("{{diresa}}","Direccion Regional de Salud Ucayali");
+  html = html.replace("{{diresa}}","RED DE SALUD N°1 DE CORONEL PORTILLO");
   html = html.replace("{{area}}",`${area}`);
   let ubicacion = path.join(__dirname,'../document/','pdf','documento-interno.pdf');
   pdf.create(html, options).toFile(ubicacion, function (err, resp) {

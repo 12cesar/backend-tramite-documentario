@@ -54,6 +54,11 @@ const recepcionarDestinosInterno = async (req = request, res = response) => {
   try {
     const {id} = req.params;
     const {ano,fecha,hora} = funDate();
+    const destin = await DestinoInterno.findOne({
+      where:{
+        id
+      }
+    })
     const destinos = await DestinoInterno.update({
         estadoRecepcion:1
     },{where:{
@@ -64,13 +69,14 @@ const recepcionarDestinosInterno = async (req = request, res = response) => {
       horaRecepcion:hora
     },{
       where:{
-        idDestino:id
+        codigoTramite:destin.codigoTramite
       }
     });
     res.json({
       ok: true,
       msg:'Tramite recepcionado con exito',
-      destinos
+      destinos,
+      seguimiento
     });
   } catch (error) {
     res.status(400).json({

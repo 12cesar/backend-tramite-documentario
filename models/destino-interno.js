@@ -1,5 +1,6 @@
 const { Model,DataTypes } = require("sequelize");
 const sequelize = require('../db/dbMysql');
+const DetalleDestinoInterno = require("./detalle-destino-interno");
 
 
 class DestinoInterno extends Model  {};
@@ -30,5 +31,13 @@ DestinoInterno.init({
 });
 
 
+DestinoInterno.hasMany(DetalleDestinoInterno,{
+    as:'detalledestinointerno',
+    foreignKey:"idDestino"
+});
+DetalleDestinoInterno.belongsTo(DestinoInterno,{
+    foreignKey:"idDestino",
+    sourceKey:"id"
+})
 
 module.exports = DestinoInterno

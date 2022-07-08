@@ -30,6 +30,13 @@ Documentointerno.init({
     estadoDerivado:{
         type: DataTypes.TINYINT,
         defaultValue:0
+    },
+    tipoEnvio:{
+        type:DataTypes.INTEGER
+    },
+    envio:{
+        type:DataTypes.TINYINT,
+        defaultValue:1
     }
 },{
     sequelize,
