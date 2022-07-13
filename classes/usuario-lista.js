@@ -1,25 +1,27 @@
-const Usuario = require("./usuario");
+//const Usuario = require("./usuario");
 
-class UsuariosLista {
+class Usuarios {
 
-     lista=[];
+     
+     //persona=[];
 
-
-    constructor() { }
+    constructor() {
+        this.personas=[];
+     }
 
     // Agregar un usuario
-    agregar( usuario = Usuario ) {
-
-        this.lista.push( usuario );
-        console.log( this.lista );
-        return usuario
+    agregar( id,nombre, area ) {
+        let persona = {id,nombre,area};
+        this.personas.push(persona);
+        return this.personas;
     }
-    actualizarNombre( id= '', nombre= '' ) {
+    actualizarNombre( id= '', nombre= '', area='' ) {
 
-        for( let usuario of this.lista ) {
+        for( let usuario of this.personas ) {
 
             if ( usuario.id === id ) {
                 usuario.nombre = nombre;
+                usuario.area = area
                 break;
             }
 
@@ -27,25 +29,25 @@ class UsuariosLista {
 
 
         console.log('===== Actualizando usuario ====');
-        console.log( this.lista );
+        console.log( this.personas );
 
     }
-    // Obtener lista de usuarios
-    getLista() {
-        return this.lista.filter( usuario => usuario.nombre !== 'sin-nombre' );
+    // Obtener personas de usuarios
+    getpersonas() {
+        return this.personas.filter(usuario=> usuario.nombre != '');
     }
 
     // Obtener un usuario
-    getUsuario( id= '' ) {
+    getUsuario(id) {
 
-        return this.lista.find( usuario => usuario.id === id );
+        return this.personas.find( usuario => usuario.id === id );
 
     }
 
     // Obtener usuario en una sala en particular
     getUsuariosEnSala( sala= '' ) {
 
-        return this.lista.filter( usuario =>usuario.sala === sala );
+        return this.personas.filter( usuario =>usuario.sala === sala );
 
     }
 
@@ -54,11 +56,13 @@ class UsuariosLista {
 
         const tempUsuario = this.getUsuario( id );
 
-        this.lista = this.lista.filter( usuario => usuario.id !== id );
+        this.personas = this.personas.filter( usuario => usuario.id !== id );
 
         return tempUsuario;
         
     }
 }
 
-module.exports = UsuariosLista
+module.exports = {
+    Usuarios
+}

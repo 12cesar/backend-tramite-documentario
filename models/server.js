@@ -3,7 +3,7 @@ const cors = require('cors')
 const fileUpload = require('express-fileupload');
 const http = require('http');
 const socketIO = require('socket.io');
-const { conectarCliente } = require('../sockets/usuario-socket');
+const { conectarCliente, desconectarCliente,configurarUsuario, crearDocInter } = require('../sockets/usuario-socket');
 const sequelize = require('../db/dbMysql');
 class Server{
     static _intance=Server;
@@ -75,7 +75,11 @@ class Server{
         console.log('Escuchando conexiones - sockets');
         this.io.on('connection', cliente=>{
             console.log('Cliente conectado');
+            
             conectarCliente(cliente, this.io);
+            configurarUsuario(cliente,this.io);
+            crearDocInter(cliente,this.io);
+            desconectarCliente(cliente,this.io);
         })
     }
     middlewares(){

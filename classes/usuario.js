@@ -2,16 +2,18 @@ class Usuario {
 
     id= '';
     nombre= '';
-    sala= '';
+    area= '';
 
     constructor( id= '' ) { 
         
         this.id = id;
         this.nombre = 'sin-nombre';
-        this.sala   = 'sin-sala';
+        this.area   = 'sin-sala';
 
     }
 
 }
 
-module.exports = Usuario
+module.exports = {
+    Usuario
+}
