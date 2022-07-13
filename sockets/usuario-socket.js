@@ -37,6 +37,7 @@ const crearDocInter = async(cliente=Socket, io=socketIO.Server)=>{
         console.log(cliente.id);
         callback({
             ok:true,
+            msg:'Se creo dcoumento con exito',
             personas
         })
     })
