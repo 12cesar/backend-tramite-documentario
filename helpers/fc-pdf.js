@@ -31,8 +31,9 @@ const fcPdfInterno = async (codigo) => {
   });
   const arrayFe = doc.fecha.split("-");
   const event = new Date(
-    Date.UTC(Number(arrayFe[0]), Number(arrayFe[1]) - 1, 13, 3, 0, 0)
+    Date.UTC(Number(arrayFe[0]), Number(arrayFe[1])-1, Number(arrayFe[2])+1, 3, 0, 0)
   );
+  console.log(event);
   const option = {
     weekday: "long",
     year: "numeric",

@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const { getDocumentoInternoPdf, pdfDocInter, getPruebaPdf } = require("../controllers/pdf");
+const { validarCampos, validarJWT } = require("../middlewares");
 
 const router = Router();
 

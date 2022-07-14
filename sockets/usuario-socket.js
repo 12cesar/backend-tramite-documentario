@@ -42,9 +42,22 @@ const crearDocInter = async(cliente=Socket, io=socketIO.Server)=>{
         })
     })
 }
+const firmarDocInter = async(cliente=Socket, io=socketIO.Server)=>{
+    cliente.on('agregar-firma-interno', (data,callback)=>{
+        const personas =  usuariosConectados.getUsuario(cliente.id);
+        cliente.broadcast.emit(`agregar-firma-interno-${personas.area}`,'se creo documento interno');
+        console.log(cliente.id);
+        callback({
+            ok:true,
+            msg:'Se firmo documento con exito',
+            personas
+        })
+    })
+}
 module.exports = {
     conectarCliente,
     configurarUsuario,
     desconectarCliente,
-    crearDocInter
+    crearDocInter,
+    firmarDocInter
 }

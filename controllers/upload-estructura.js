@@ -25,6 +25,9 @@ const getUploadEstructura = async (req = request, res = response) => {
         );
         if (fs.existsSync(pathImagen)) {
           return res.sendFile(pathImagen)
+        }else{
+          const pathDefault = path.join(__dirname,'../assets/','no-image.jpg');
+          return res.sendFile(pathDefault)
         }
         
       }
@@ -40,6 +43,9 @@ const getUploadEstructura = async (req = request, res = response) => {
         );
         if (fs.existsSync(pathImagen)) {
           return res.sendFile(pathImagen)
+        }else{
+          const pathDefault = path.join(__dirname,'../assets/','no-image.jpg');
+          return res.sendFile(pathDefault)
         }
         
       }
