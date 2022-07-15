@@ -54,6 +54,18 @@ const firmarDocInter = async(cliente=Socket, io=socketIO.Server)=>{
         })
     })
 }
+const derivarDocInter = async(cliente=Socket, io=socketIO.Server)=>{
+    cliente.on('derivar-firma-interno', (data,callback)=>{
+        const personas =  usuariosConectados.getUsuario(cliente.id);
+        cliente.broadcast.emit(`derivar-firma-interno-${personas.area}`,'se derivo documento interno');
+        console.log(cliente.id);
+        callback({
+            ok:true,
+            msg:'Se derivo documento con exito',
+            personas
+        })
+    })
+}
 module.exports = {
     conectarCliente,
     configurarUsuario,
