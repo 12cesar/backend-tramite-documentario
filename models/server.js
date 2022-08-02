@@ -3,52 +3,52 @@ const cors = require('cors')
 const fileUpload = require('express-fileupload');
 const http = require('http');
 const socketIO = require('socket.io');
-const { conectarCliente, desconectarCliente,configurarUsuario, crearDocInter, firmarDocInter } = require('../sockets/usuario-socket');
+const { conectarCliente, desconectarCliente, configurarUsuario, crearDocInter, firmarDocInter, tramiteRecepInter, derivarDocInter, respuestaDocInter } = require('../sockets/usuario-socket');
 const sequelize = require('../db/dbMysql');
-class Server{
-    static _intance=Server;
-    io=socketIO.Server;
-    constructor(){
+class Server {
+    static _intance = Server;
+    io = socketIO.Server;
+    constructor() {
         this.app = express();
         this.port = process.env.PORT;
         this.paths = {
-            users:'/api/user',
-            cargos:'/api/cargo',
-            direccion:'/api/direccion',
-            area:'/api/area',
-            userarea:'/api/userarea',
-            authuser:'/api/authuser',
-            userexterno:'/api/userexterno',
-            validsunat:'/api/validsunat',
-            tipoPersona:'/api/tipopersona',
-            remitente:'/api/remitente',
-            tipodocumento:'/api/tipodocumento',
-            estadodocumento:'/api/estadodocumento',
-            estadotramite:'/api/estadotramite',
-            estructura:'/api/estructura',
-            uploadestruc:'/api/uploadestructura',
-            documentointerno:'/api/documentointerno',
-            tramiteinter:'/api/tramiteinterno',
-            tramiteexter:'/api/tramiteexterno',
-            derivadointer:'/api/derivadointerno',
-            derivadoexter:'/api/derivadorexterno',
-            recepcion:'/api/recepcion',
-            destinointer:'/api/destinointerno',
-            seguimientointer:'/api/seguimientointerno',
-            firmadocumentinter:'/api/firmadocumentointerno',
-            anexointerno:'/api/anexointerno',
-            mostraranexo:'/api/mostraranexo',
-            tipoenvio:'/api/tipoenvio',
-            respuestatramite:'/api/respuestatramite',
-            detalledestinointerno:'/api/detalledestinointerno',
-            pdf:'/api/pdf'
+            users: '/api/user',
+            cargos: '/api/cargo',
+            direccion: '/api/direccion',
+            area: '/api/area',
+            userarea: '/api/userarea',
+            authuser: '/api/authuser',
+            userexterno: '/api/userexterno',
+            validsunat: '/api/validsunat',
+            tipoPersona: '/api/tipopersona',
+            remitente: '/api/remitente',
+            tipodocumento: '/api/tipodocumento',
+            estadodocumento: '/api/estadodocumento',
+            estadotramite: '/api/estadotramite',
+            estructura: '/api/estructura',
+            uploadestruc: '/api/uploadestructura',
+            documentointerno: '/api/documentointerno',
+            tramiteinter: '/api/tramiteinterno',
+            tramiteexter: '/api/tramiteexterno',
+            derivadointer: '/api/derivadointerno',
+            derivadoexter: '/api/derivadorexterno',
+            recepcion: '/api/recepcion',
+            destinointer: '/api/destinointerno',
+            seguimientointer: '/api/seguimientointerno',
+            firmadocumentinter: '/api/firmadocumentointerno',
+            anexointerno: '/api/anexointerno',
+            mostraranexo: '/api/mostraranexo',
+            tipoenvio: '/api/tipoenvio',
+            respuestatramite: '/api/respuestatramite',
+            detalledestinointerno: '/api/detalledestinointerno',
+            pdf: '/api/pdf'
         }
         //Connect to socket
         this.httpServer = http.createServer(this.app);
-        this.io = require('socket.io')(this.httpServer,{
-            cors:{
-                origin:true,
-                credentials:true
+        this.io = require('socket.io')(this.httpServer, {
+            cors: {
+                origin: true,
+                credentials: true
             }
         })
         // Connect to database
@@ -60,10 +60,10 @@ class Server{
         // Routes application
         this.routes();
     }
-    static get instance(){
-        return this._intance || (this._intance=new this());
+    static get instance() {
+        return this._intance || (this._intance = new this());
     }
-    async connectDB(){
+    async connectDB() {
         try {
             await sequelize.authenticate();
             console.log('Connection has been established successfully.');
@@ -71,22 +71,24 @@ class Server{
             console.error('Unable to connect to the database:', error);
         }
     }
-    listenSockets(){
+    listenSockets() {
         console.log('Escuchando conexiones - sockets');
-        this.io.on('connection', cliente=>{
-            
+        this.io.on('connection', cliente => {
             conectarCliente(cliente, this.io);
-            configurarUsuario(cliente,this.io);
-            crearDocInter(cliente,this.io);
-            firmarDocInter(cliente,this.io);
-            desconectarCliente(cliente,this.io);
-        })
+            configurarUsuario(cliente, this.io);
+            crearDocInter(cliente, this.io);
+            firmarDocInter(cliente, this.io);
+            tramiteRecepInter(cliente, this.io);
+            derivarDocInter(cliente, this.io);
+            respuestaDocInter(cliente,this.io);
+            desconectarCliente(cl1iente, this.io);
+        });
     }
-    middlewares(){
+    middlewares() {
         // Fileupload - Carga de archivos
         this.app.use(fileUpload({
-            useTempFiles : true,
-            tempFileDir : '/tmp/',
+            useTempFiles: true,
+            tempFileDir: '/tmp/',
             createParentPath: true
         }));
         // Cors
@@ -95,9 +97,9 @@ class Server{
         this.app.use(express.json());
         // Directorio publico
         this.app.use(express.static('public'));
-        
+
     }
-    routes(){
+    routes() {
         this.app.use(this.paths.users, require('../routes/users'));
         this.app.use(this.paths.cargos, require('../routes/cargo'));
         this.app.use(this.paths.direccion, require('../routes/direccion'));
@@ -129,8 +131,8 @@ class Server{
         this.app.use(this.paths.detalledestinointerno, require('../routes/detalle-destino-interno'));
         this.app.use(this.paths.pdf, require('../routes/pdf'));
     }
-    listen(){
-        this.httpServer.listen(this.port, ()=>{
+    listen() {
+        this.httpServer.listen(this.port, () => {
             console.log(`Escuchando el puerto ${this.port}: http://localhost:${this.port}`);
         });
     }

@@ -55,9 +55,9 @@ const firmarDocInter = async(cliente=Socket, io=socketIO.Server)=>{
     })
 }
 const derivarDocInter = async(cliente=Socket, io=socketIO.Server)=>{
-    cliente.on('derivar-firma-interno', (data,callback)=>{
+    cliente.on('derivar-documento-interno', (data,callback)=>{
         const personas =  usuariosConectados.getUsuario(cliente.id);
-        cliente.broadcast.emit(`derivar-firma-interno-${personas.area}`,'se derivo documento interno');
+        cliente.broadcast.emit(`derivar-documento-interno-${personas.area}`,'se derivo documento interno');
         console.log(cliente.id);
         callback({
             ok:true,
@@ -66,10 +66,38 @@ const derivarDocInter = async(cliente=Socket, io=socketIO.Server)=>{
         })
     })
 }
+const tramiteRecepInter = async(cliente=Socket, io=socketIO.Server)=>{
+    cliente.on('tramite-recepcion-interno', (data,callback)=>{
+        const personas =  usuariosConectados.getUsuario(cliente.id);
+        cliente.broadcast.emit(`tramite-recepcion-interno-${personas.area}`,'se firmo documento interno');
+        console.log(cliente.id);
+        callback({
+            ok:true,
+            msg:'Se firmo documento con exito',
+            personas
+        });
+    })
+}
+const respuestaDocInter = async(cliente=Socket, io=socketIO.Server)=>{
+    cliente.on('respuesta-documento-interno', (data,callback)=>{
+        const personas =  usuariosConectados.getUsuario(cliente.id);
+        cliente.broadcast.emit(`respuesta-documento-interno-${personas.area}`,'se respondio tramite interno');
+        console.log(cliente.id);
+        callback({
+            ok:true,
+            msg:'Se respondio tramite con exito',
+            personas
+        });
+    })
+}
+
 module.exports = {
     conectarCliente,
     configurarUsuario,
-    desconectarCliente,
     crearDocInter,
-    firmarDocInter
+    firmarDocInter,
+    tramiteRecepInter,
+    derivarDocInter,
+    respuestaDocInter,
+    desconectarCliente
 }
