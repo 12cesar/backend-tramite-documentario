@@ -81,7 +81,7 @@ class Server {
             tramiteRecepInter(cliente, this.io);
             derivarDocInter(cliente, this.io);
             respuestaDocInter(cliente,this.io);
-            desconectarCliente(cl1iente, this.io);
+            desconectarCliente(cliente, this.io);
         });
     }
     middlewares() {

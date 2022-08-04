@@ -117,6 +117,18 @@
             text-align: justify;
             font-size: 13px;
         }
+        .fecha{
+            text-align: right;
+            margin-bottom: 10px!important;
+            font-weight: 200;
+        }
+        hr{
+            text-decoration: underline; 
+            font-weight: bold;
+            color: black;
+            background-color: black;
+            margin-top: 30px;
+        }
     </style>
 </head>
 
@@ -137,14 +149,15 @@
     <div id="contenedor">
 
         <div id="pageFooter" style="border-top: 1px solid #ddd; padding-top: 5px;">
-            <p class="title" style="">DIRECCION: JR. HUASCAR N° 353 TELF: (061) - 571446 - PUCALLPA-UCAYALI-PERU</p>
-            <P class="title">www.diresaucayali.gob.pe</P>
+            <p class="title" style="">DIRECCION: JR. LOS TULIPANES MZA. 1 LOTE. 5 A.H. 7 DE JUNIO - PUCALLPA-UCAYALI-PERU</p>
+            <P class="title">https://www.gob.pe/regionucayali-riscoronelportillo</P>
             <p
                 style="color:black; margin: 0; padding-bottom: 5px; text-align: right; font-family: sans-serif; font-size: .65em">
                 Página {{page}} de {{pages}}</p>
         </div>
         <div class="logo1"></div>
         <div class="sumilla">
+            <h5 class="fecha"></b> Pucallpa, {{fecha}}</h5>
             <h4>{{documento}}</h4>
             <h5>A <b style="margin-left: 75px;
                 margin-right: 20px;">:</b> </h5>
@@ -152,8 +165,7 @@
             <h5>Asunto <b style="margin-left: 38px;
                 margin-right: 18px;">:</b> {{asunto}}</h5>
             {{referencia}}
-            <h5>Fecha <b style="margin-left: 46px;
-                margin-right: 18px;">:</b> Pucallpa, {{fecha}}</h5>
+            <hr>
         </div>
         <div class="contenido">
             {{descripcion}}
