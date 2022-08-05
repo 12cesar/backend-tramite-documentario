@@ -16,7 +16,7 @@ const getDetalleDestinoInterno = async (req = request, res = response) => {
       {
         model:DestinoInterno,
         where:{
-          codigoTramite:codigo
+          codigoTramite:codigo,
         }
 
       },{
@@ -125,6 +125,16 @@ const postDetalleDestinoInterno = async (req = request, res = response) => {
         modelo.idDestino = Number(idDoc);
         modelo.fecha = fecha;
         modelo.idRespuesta = Number(envio);
+        const dest3 = await DestinoInterno.update(
+          {
+            atendido: 1,
+          },
+          {
+            where: {
+              id: Number(idDoc),
+            },
+          }
+        );
         break;
       default:
         break;
