@@ -41,6 +41,7 @@ class Server {
             tipoenvio: '/api/tipoenvio',
             respuestatramite: '/api/respuestatramite',
             detalledestinointerno: '/api/detalledestinointerno',
+            ejemplodocumento:'/api/ejemplodocumento',
             pdf: '/api/pdf'
         }
         //Connect to socket
@@ -130,6 +131,7 @@ class Server {
         this.app.use(this.paths.respuestatramite, require('../routes/respuesta-tramite'));
         this.app.use(this.paths.detalledestinointerno, require('../routes/detalle-destino-interno'));
         this.app.use(this.paths.pdf, require('../routes/pdf'));
+        this.app.use(this.paths.ejemplodocumento, require('../routes/ejemplo-document'));
     }
     listen() {
         this.httpServer.listen(this.port, () => {

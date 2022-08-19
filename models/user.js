@@ -1,6 +1,7 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require('../db/dbMysql');
 const Derivacioninterno = require("./derivacioninterno");
+const EjemploDocument = require("./ejemplo-documento");
 const Tramiteinterno = require("./tramite-interno");
 const Userarea = require("./userarea");
 
@@ -64,4 +65,16 @@ Derivacioninterno.belongsTo(Usuario,{
     foreignKey:'usuarioDerivador',
     sourceKey:'id'
 });
+
+/* Usuario Ejemplo */
+
+Usuario.hasMany(EjemploDocument,{
+    as:'usuarioEjemploDocument',
+    foreignKey:'idUsuario'
+});
+
+EjemploDocument.belongsTo(Usuario,{
+    foreignKey:'idUsuario',
+    sourceKey:'id'
+})
 module.exports = Usuario;

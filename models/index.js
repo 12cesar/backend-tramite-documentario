@@ -29,6 +29,7 @@ const SeguimientoInterno = require("./seguimiento-interno");
 const TipoEnvio = require("./tipo-envio");
 const RespuestaTramite = require("./respuesta-tramite");
 const DetalleDestinoInterno = require("./detalle-destino-interno");
+const EjemploDocumento = require("./ejemplo-documento");
 module.exports = {
   Server,
   Usuario,
@@ -60,5 +61,6 @@ module.exports = {
   SeguimientoInterno,
   TipoEnvio,
   RespuestaTramite,
-  DetalleDestinoInterno
+  DetalleDestinoInterno,
+  EjemploDocumento
 };
