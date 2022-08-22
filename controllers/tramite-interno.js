@@ -42,6 +42,34 @@ const getTramiteInternos = async (req = request, res = response) => {
   }
 };
 
+const getGlobalTramiteInterno = async (req = request, res = response) => {
+
+  try {
+    const tramiteinter = await Tramiteinterno.findAll({
+      include:[
+        {
+          model:Area,
+          attributes: ["id", "nombre"],
+        },
+        {
+          model:Codigodocumento
+        }
+      ]
+    });
+    res.json({
+      ok: true,
+      msg: "Tramites internos mostrados con exito",
+      tramiteinter,
+    });
+  } catch (error) {
+    res.status(400).json({
+      ok: false,
+      msg: `Error al mostrar los tramites internos, error: ${error}`,
+    });
+  }
+
+}
+
 const getTramiteInterno = async (req = request, res = response) => {
   try {
     const { codigo } = req.params;
@@ -186,6 +214,7 @@ const deleteTramiteInterno = async (req = request, res = response) => {
 
 module.exports = {
   getTramiteInternos,
+  getGlobalTramiteInterno,
   getTramiteInterno,
   postTramiteInterno,
   putTramiteInterno,
