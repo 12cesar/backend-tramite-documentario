@@ -17,7 +17,7 @@ const getDetalleDestinoInterno = async (req = request, res = response) => {
         model:DestinoInterno,
         where:{
           codigoTramite:codigo,
-        }
+        },
 
       },{
         model:RespuestaTramite

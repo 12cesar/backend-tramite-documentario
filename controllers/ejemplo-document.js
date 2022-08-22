@@ -23,6 +23,27 @@ const getEjemploDocument = async (req = request, res = response) => {
   }
 };
 
+const getEjemploDocumentUnico = async (req = request, res = response) => {
+  try {
+    const { id } = req.params;
+    const ejemplo = await EjemploDocument.findAll({
+      where: {
+        id: Number(id),
+      },
+    });
+    res.json({
+      ok: true,
+      msg: "Se mostro el ejemplo con exito",
+      ejemplo,
+    });
+  } catch (error) {
+    res.status(400).json({
+      ok: false,
+      msg: `Error : ${error}`,
+    });
+  }
+};
+
 const postEjemploDocument = async (req = request, res = response) => {
   try {
     const { titulo, idUsuario, ...data } = req.body;
@@ -64,4 +85,5 @@ module.exports = {
   getEjemploDocument,
   postEjemploDocument,
   deleteEjemploDocument,
+  getEjemploDocumentUnico
 };
